@@ -1,0 +1,232 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Appwrite Playground</title>
+  <meta name="description" content="A simple Appwrite demo app for gettig started with API integration">
+  <meta name="author" content="Appwrite Team">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,500,600,800" />
+  <link rel="icon" type="image/png" href="https://appwrite.io/images/favicon.png?v=1" />
+
+  <style>
+      body {
+        font-family: Poppins,sans-serif,Arial;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 500;
+      }
+  </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><img src="https://appwrite.io/images/appwrite-white.svg" height="22" /> &nbsp;playground</a>
+    </nav>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-5 mb-5">Hello Appwriters!</h1>
+            <p class="lead">Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the source code of this page to learn how to use the different Appwrite JS SDK features.</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2 class="mb-5">Auth & Account</h2>
+
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLogs()">Get User Logs</button>
+    </div>
+
+    <hr class="mb-5" />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Register Example</h3>
+                <form onsubmit="register(event);">
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" class="form-control" id="register-email" placeholder="Enter email" value="demo@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" class="form-control" id="register-password" placeholder="Password" value="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Login Example</h3>
+                <form onsubmit="login(event);">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" class="form-control" id="login-email" placeholder="Enter email" value="demo@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" class="form-control" id="login-password" placeholder="Password" value="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Connect with OAuth</h3>
+                
+            </div>
+        </div>
+    </div>
+
+    <hr class="mb-5" />
+
+    <div class="container">
+        <h2 class="mb-5">Locale</h2>
+    
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLocation()">Get User Location</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getIP()">Get User IP</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isEU()">Is User a Member of the EU?</button>
+    </div>
+
+    <hr class="mb-5" />
+
+    <!-- <div class="container">
+        <h2 class="mb-5">Storage</h2>
+    
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLocation()">Get User Location</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getIP()">Get User IP</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isEU()">Is User a Member of the EU?</button>
+    </div> -->
+
+    <!-- Include Appwrite JS SDK before trying to create a new instance -->
+    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/appwrite@1.0.23"></script> -->
+    <script src="sdk.js"></script>
+    <script>
+        // Before we start doing anything, we need to init our Appwrite JS SDK
+        var appwrite = new Appwrite();
+
+        appwrite
+            .setEndpoint('https://appwrite.test/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject('5d8fa6deefd05') // Your Appwrite Project UID, you can get it from your project settings page.
+            //.setProject('5da013ae3e7f1') // Your Appwrite Project UID, you can get it from your project settings page.
+        ;
+
+        /**
+         * Please Note!
+         * 
+         * Don't ever integrate your Appwrite SDK with a secret key on client apps
+         * who run on browsers, Android apps, iOS apps and other client platforms
+         * like electron, XBOX and others.
+         */
+
+         function isLogged(event) {
+            let promise = appwrite.account.get();
+
+            promise.then(function (response) {
+                alert('User is Logged!');
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getSessions(event) {
+            let promise = appwrite.account.getSessions();
+
+            promise.then(function (response) {
+                console.log('User Devices:', response);
+                alert('User has ' + response.length + ' active sessions. Check developer console for more info');
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getLogs(event) {
+            let promise = appwrite.account.getSecurity();
+
+            promise.then(function (response) {
+                console.log('User Logs:', response);
+                alert('User has ' + response.length + ' logs. Check developer console for more info');
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function register(event) {
+            event.preventDefault();
+            /**
+             * Callback URLs are required for creating a browser
+             *  session cookie due to some browsers 3rd party cookie policy limitations,
+             *  this is not required for other client based platforms
+             */
+            appwrite.auth.register(
+                event.target.elements['register-email'].value, // Email
+                event.target.elements['register-password'].value, // Password
+                'http://localhost:8080/confirm', // Callback URL for account confirmation page
+                'http://localhost:8080/success', // Callback URL for success
+                'http://localhost:8080/failure', // Callback URL for failure
+                //'User Name'
+            );
+        }
+
+        function login(event) {
+            event.preventDefault();
+            /**
+             * Callback URLs are required for creating a browser
+             *  session cookie due to some browsers 3rd party cookie policy limitations,
+             *  this is not required for other client based platforms
+             */
+            appwrite.auth.login(
+                event.target.elements['login-email'].value, // Email
+                event.target.elements['login-password'].value, // Password
+                'http://localhost:8080/success', // Callback URL for success
+                'http://localhost:8080/failure' // Callback URL for failure
+            );
+        }
+
+        function loginWithOAuth(event) {
+            event.preventDefault();
+            /**
+             * Callback URLs are required for creating a browser
+             *  session cookie due to some browsers 3rd party cookie policy limitations,
+             *  this is not required for other client based platforms
+             */
+            appwrite.auth.oauth(
+                'facebook',
+                'http://localhost:8080/success', // Callback URL for success
+                'http://localhost:8080/failure' // Callback URL for failure
+            );
+        }
+
+        function getLocation() {
+            let promise = appwrite.locale.getLocale();
+
+            promise.then(function (response) {
+                alert('User is from ' + response.country + ', country code is: ' + response.countryCode);
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getIP() {
+            let promise = appwrite.locale.getLocale();
+
+            promise.then(function (response) {
+                alert('User IP is: ' + response.ip);
+            }, function (error) {
+                alert('Failed to get user locale.');
+            });
+        }
+
+        function isEU() {
+            let promise = appwrite.locale.getLocale();
+
+            promise.then(function (response) {
+                alert((response.eu) ? 'User is a member of the EU' : 'User is not a member of the EU');
+            }, function (error) {
+                alert('Failed to get user locale.');
+            });
+        }
+    </script>
+</body>
+</html>

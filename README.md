@@ -6,7 +6,7 @@ Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use th
 
 ## Get Started
 
-The index.html file in this repository contains all the playground examples and source code.
+The **demo/index.html** file in this repository contains **all** the playground examples and source code.
 
 You can learn how to to integrate your Appwrite JS SDK in your project and see how different features of the SDK can be used.
 

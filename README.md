@@ -1,4 +1,4 @@
-# Appwrite's JS Playgorund 🎮
+# Appwrite's JS Playground 🎮
 
 **Work in Progress**
 

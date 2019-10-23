@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group">
                         <label for="register-password">Password</label>
-                        <input type="password" class="form-control" id="register-password" placeholder="Password" value="password" required>
+                        <input type="password" class="form-control" id="register-password" placeholder="Password" value="password"  required pattern=".{6,}" title="Six or more characters">
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
-                        <input type="password" class="form-control" id="login-password" placeholder="Password" value="password" required>
+                        <input type="password" class="form-control" id="login-password" placeholder="Password" value="password"  required pattern=".{6,}" title="Six or more characters">
                     </div>
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>

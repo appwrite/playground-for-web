@@ -44,7 +44,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm mb-5">
-                <h3 class="mb-4">Register Example</h3>
+                <h3 class="mb-4">Register</h3>
                 <form onsubmit="register(event);">
                     <div class="form-group">
                         <label for="register-email">Email</label>
@@ -58,7 +58,7 @@
                 </form>
             </div>
             <div class="col-sm mb-5">
-                <h3 class="mb-4">Login Example</h3>
+                <h3 class="mb-4">Login</h3>
                 <form onsubmit="login(event);">
                     <div class="form-group">
                         <label for="login-email">Email</label>
@@ -100,16 +100,14 @@
 
     <!-- Include Appwrite JS SDK before trying to create a new instance -->
     
-    <!-- <script src="https://cdn.jsdelivr.net/npm/appwrite@1.0.23"></script> -->
-    <script src="sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@1.0.23"></script>
     <script>
         // Before we start doing anything, we need to init our Appwrite JS SDK
         var appwrite = new Appwrite();
 
         appwrite
-            .setEndpoint('https://appwrite.test/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject('5d8fa6deefd05') // Your Appwrite Project UID, you can get it from your project settings page.
-            //.setProject('5da013ae3e7f1') // Your Appwrite Project UID, you can get it from your project settings page.
+            .setEndpoint('https://appwrite.io/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject('5da013ae3e7f1') // Your Appwrite Project UID, you can get it from your project settings page.
         ;
 
         /**
@@ -162,9 +160,9 @@
             appwrite.auth.register(
                 event.target.elements['register-email'].value, // Email
                 event.target.elements['register-password'].value, // Password
-                'http://localhost:8080/confirm', // Callback URL for account confirmation page
-                'http://localhost:8080/success', // Callback URL for success
-                'http://localhost:8080/failure', // Callback URL for failure
+                'http://localhost:8080/?confirm', // Callback URL for account confirmation page
+                'http://localhost:8080/?success', // Callback URL for success
+                'http://localhost:8080/?failure', // Callback URL for failure
                 //'User Name'
             );
         }
@@ -179,8 +177,8 @@
             appwrite.auth.login(
                 event.target.elements['login-email'].value, // Email
                 event.target.elements['login-password'].value, // Password
-                'http://localhost:8080/success', // Callback URL for success
-                'http://localhost:8080/failure' // Callback URL for failure
+                'http://localhost:8080/?success', // Callback URL for success
+                'http://localhost:8080/?failure' // Callback URL for failure
             );
         }
 
@@ -193,8 +191,8 @@
              */
             appwrite.auth.oauth(
                 'facebook',
-                'http://localhost:8080/success', // Callback URL for success
-                'http://localhost:8080/failure' // Callback URL for failure
+                'http://localhost:8080/?success', // Callback URL for success
+                'http://localhost:8080/?failure' // Callback URL for failure
             );
         }
 
@@ -227,6 +225,28 @@
                 alert('Failed to get user locale.');
             });
         }
+
+        // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
+        //     'completed': true,
+        //     'text': 'a new task',
+        // }, ['*'], ['*']);
+
+        // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
+        //     'completed': true,
+        //     'text': 'a new task',
+        // });
+
+        // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
+        //     'completed': true,
+        //     'text': 'a new task',
+        // }, ['user:{self}'], ['user:{self}']);
+
+        // console.log('[INFO] Adding Todo');
+        // promise.then(function(response) {
+        //     console.log(response);
+        // }, function(error) {
+        //     console.log(error);
+        // });
     </script>
 </body>
 </html>

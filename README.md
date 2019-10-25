@@ -17,8 +17,8 @@ This playground doesn't include any Appwrite best practices but rather intended 
 ### Installation
 
 1. Fork this repository and clone it.
-2. Run `npm install` command
-3. Start a web server using `npm start` command
+2. Run `npm install` command.
+3. Start a web server using `npm start` command.
 4. Access `http://localhost:8080` and start playing!
 
 ## Contributing

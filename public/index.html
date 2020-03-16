@@ -27,7 +27,7 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-5 mb-5">Hello Appwriters!</h1>
-            <p class="lead">Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the source code of this page to learn how to use the different Appwrite JS SDK features.</p>
+            <p class="lead">Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the <a href="https://github.com/appwrite/playground-for-js/blob/master/public/index.html" target="_blank">source code</a> of this page to learn how to use the different Appwrite JS SDK features.</p>
         </div>
     </div>
     
@@ -100,21 +100,21 @@
 
     <!-- Include Appwrite JS SDK before trying to create a new instance -->
     
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@1.0.23"></script>
+    <script src="sdk.js"></script>
     <script>
         // Before we start doing anything, we need to init our Appwrite JS SDK
         var appwrite = new Appwrite();
 
         appwrite
-            .setEndpoint('https://appwrite.io/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject('5da013ae3e7f1') // Your Appwrite Project UID, you can get it from your project settings page.
+            .setEndpoint('https://localhost/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject('5df7e53274954') // Your Appwrite Project UID, you can get it from your project settings page.
         ;
 
         /**
          * Please Note!
          * 
          * Don't ever integrate your Appwrite SDK with a secret key on client apps
-         * who run on browsers, Android apps, iOS apps and other client platforms
+         * like browsers, Android apps, iOS apps and other client platforms
          * like electron, XBOX and others.
          */
 
@@ -157,14 +157,15 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            appwrite.auth.register(
+            appwrite.account.create(
                 event.target.elements['register-email'].value, // Email
                 event.target.elements['register-password'].value, // Password
-                'http://localhost:8080/?confirm', // Callback URL for account confirmation page
-                'http://localhost:8080/?success', // Callback URL for success
-                'http://localhost:8080/?failure', // Callback URL for failure
-                //'User Name'
-            );
+                'User Name'
+            ).then(function (response) {
+                alert('Account created succefully!');
+            }, function (error) {
+                alert('Failed to create account');
+            });
         }
 
         function login(event) {
@@ -174,12 +175,16 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            appwrite.auth.login(
+            appwrite.account.createSession(
                 event.target.elements['login-email'].value, // Email
                 event.target.elements['login-password'].value, // Password
-                'http://localhost:8080/?success', // Callback URL for success
-                'http://localhost:8080/?failure' // Callback URL for failure
-            );
+            )
+            // .then(function (response) {
+            //     alert('Session created succefully!');
+            // }, function (error) {
+            //     alert('Failed to create session');
+            // })
+            ;
         }
 
         function loginWithOAuth(event) {

@@ -71,10 +71,10 @@
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
             </div>
-            <div class="col-sm mb-5">
+            <!-- <div class="col-sm mb-5">
                 <h3 class="mb-4">Connect with OAuth</h3>
                 
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -107,7 +107,7 @@
 
         appwrite
             .setEndpoint('https://localhost/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject('5df7e53274954') // Your Appwrite Project UID, you can get it from your project settings page.
+            .setProject('5e63e0a61d9c2') // Your Appwrite Project UID, you can get it from your project settings page.
         ;
 
         /**
@@ -140,7 +140,7 @@
         }
 
         function getLogs(event) {
-            let promise = appwrite.account.getSecurity();
+            let promise = appwrite.account.getLogs();
 
             promise.then(function (response) {
                 console.log('User Logs:', response);
@@ -178,13 +178,11 @@
             appwrite.account.createSession(
                 event.target.elements['login-email'].value, // Email
                 event.target.elements['login-password'].value, // Password
-            )
-            // .then(function (response) {
-            //     alert('Session created succefully!');
-            // }, function (error) {
-            //     alert('Failed to create session');
-            // })
-            ;
+            ).then(function (response) {
+                    alert('Session created succefully!');
+                }, function (error) {
+                    alert('Failed to create session');
+                });
         }
 
         function loginWithOAuth(event) {
@@ -202,7 +200,7 @@
         }
 
         function getLocation() {
-            let promise = appwrite.locale.getLocale();
+            let promise = appwrite.locale.get();
 
             promise.then(function (response) {
                 alert('User is from ' + response.country + ', country code is: ' + response.countryCode);
@@ -212,7 +210,7 @@
         }
 
         function getIP() {
-            let promise = appwrite.locale.getLocale();
+            let promise = appwrite.locale.get();
 
             promise.then(function (response) {
                 alert('User IP is: ' + response.ip);
@@ -222,7 +220,7 @@
         }
 
         function isEU() {
-            let promise = appwrite.locale.getLocale();
+            let promise = appwrite.locale.get();
 
             promise.then(function (response) {
                 alert((response.eu) ? 'User is a member of the EU' : 'User is not a member of the EU');

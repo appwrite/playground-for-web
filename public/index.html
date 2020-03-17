@@ -35,6 +35,8 @@
         <h2 class="mb-5">Auth & Account</h2>
 
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLogs()">Get User Logs</button>
     </div>
@@ -123,6 +125,26 @@
 
             promise.then(function (response) {
                 alert('User is Logged!');
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getUserName(event) {
+            let promise = appwrite.account.get();
+
+            promise.then(function (response) {
+                alert(response.name);
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getUserEmail(event) {
+            let promise = appwrite.account.get();
+
+            promise.then(function (response) {
+                alert(response.email);
             }, function (error) {
                 alert('No User is Logged!');
             });

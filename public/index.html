@@ -27,7 +27,7 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-5 mb-5">Hello Appwriters!</h1>
-            <p class="lead">Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the source code of this page to learn how to use the different Appwrite JS SDK features.</p>
+            <p class="lead">Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the <a href="https://github.com/appwrite/playground-for-js/blob/master/public/index.html" target="_blank">source code</a> of this page to learn how to use the different Appwrite JS SDK features.</p>
         </div>
     </div>
     
@@ -35,6 +35,8 @@
         <h2 class="mb-5">Auth & Account</h2>
 
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLogs()">Get User Logs</button>
     </div>
@@ -71,10 +73,10 @@
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
             </div>
-            <div class="col-sm mb-5">
+            <!-- <div class="col-sm mb-5">
                 <h3 class="mb-4">Connect with OAuth</h3>
                 
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -100,21 +102,21 @@
 
     <!-- Include Appwrite JS SDK before trying to create a new instance -->
     
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@1.0.23"></script>
+    <script src="sdk.js"></script>
     <script>
         // Before we start doing anything, we need to init our Appwrite JS SDK
         var appwrite = new Appwrite();
 
         appwrite
-            .setEndpoint('https://appwrite.io/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject('5da013ae3e7f1') // Your Appwrite Project UID, you can get it from your project settings page.
+            .setEndpoint('https://localhost/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject('5e63e0a61d9c2') // Your Appwrite Project UID, you can get it from your project settings page.
         ;
 
         /**
          * Please Note!
          * 
          * Don't ever integrate your Appwrite SDK with a secret key on client apps
-         * who run on browsers, Android apps, iOS apps and other client platforms
+         * like browsers, Android apps, iOS apps and other client platforms
          * like electron, XBOX and others.
          */
 
@@ -123,6 +125,26 @@
 
             promise.then(function (response) {
                 alert('User is Logged!');
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getUserName(event) {
+            let promise = appwrite.account.get();
+
+            promise.then(function (response) {
+                alert(response.name);
+            }, function (error) {
+                alert('No User is Logged!');
+            });
+        }
+
+        function getUserEmail(event) {
+            let promise = appwrite.account.get();
+
+            promise.then(function (response) {
+                alert(response.email);
             }, function (error) {
                 alert('No User is Logged!');
             });
@@ -140,7 +162,7 @@
         }
 
         function getLogs(event) {
-            let promise = appwrite.account.getSecurity();
+            let promise = appwrite.account.getLogs();
 
             promise.then(function (response) {
                 console.log('User Logs:', response);
@@ -157,14 +179,15 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            appwrite.auth.register(
+            appwrite.account.create(
                 event.target.elements['register-email'].value, // Email
                 event.target.elements['register-password'].value, // Password
-                'http://localhost:8080/?confirm', // Callback URL for account confirmation page
-                'http://localhost:8080/?success', // Callback URL for success
-                'http://localhost:8080/?failure', // Callback URL for failure
-                //'User Name'
-            );
+                'User Name'
+            ).then(function (response) {
+                alert('Account created succefully!');
+            }, function (error) {
+                alert('Failed to create account');
+            });
         }
 
         function login(event) {
@@ -174,12 +197,14 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            appwrite.auth.login(
+            appwrite.account.createSession(
                 event.target.elements['login-email'].value, // Email
                 event.target.elements['login-password'].value, // Password
-                'http://localhost:8080/?success', // Callback URL for success
-                'http://localhost:8080/?failure' // Callback URL for failure
-            );
+            ).then(function (response) {
+                    alert('Session created succefully!');
+                }, function (error) {
+                    alert('Failed to create session');
+                });
         }
 
         function loginWithOAuth(event) {
@@ -197,7 +222,7 @@
         }
 
         function getLocation() {
-            let promise = appwrite.locale.getLocale();
+            let promise = appwrite.locale.get();
 
             promise.then(function (response) {
                 alert('User is from ' + response.country + ', country code is: ' + response.countryCode);
@@ -207,7 +232,7 @@
         }
 
         function getIP() {
-            let promise = appwrite.locale.getLocale();
+            let promise = appwrite.locale.get();
 
             promise.then(function (response) {
                 alert('User IP is: ' + response.ip);
@@ -217,7 +242,7 @@
         }
 
         function isEU() {
-            let promise = appwrite.locale.getLocale();
+            let promise = appwrite.locale.get();
 
             promise.then(function (response) {
                 alert((response.eu) ? 'User is a member of the EU' : 'User is not a member of the EU');

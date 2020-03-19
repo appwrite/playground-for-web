@@ -2,7 +2,7 @@
 
 **Work in Progress**
 
-Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the source code of this page to learn how to use the different Appwrite JS SDK features.
+Appwrite playground is a simple way to explore the Appwrite API & JS SDK (0.5 version). Use the source code of this page to learn how to use the different Appwrite JS SDK features.
 
 ![Appwrite Playground](preview.png)
 
@@ -19,7 +19,7 @@ This playground doesn't include any Appwrite best practices but rather intended 
 1. Fork this repository and clone it.
 2. Run `npm install` command.
 3. Start a web server using `npm start` command.
-4. Access `http://localhost:8080` and start playing!
+4. Access `http://localhost:8000` and start playing!
 
 ## Contributing
 

@@ -35,6 +35,8 @@
         <h2 class="mb-5">Auth & Account</h2>
 
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithOAuth(event)">Login With Google</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteSession(event)">Delete All Sessions</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
@@ -101,8 +103,10 @@
     </div> -->
 
     <!-- Include Appwrite JS SDK before trying to create a new instance -->
-    
-    <script src="sdk.js"></script>
+
+    <!-- Fetch the latest sdk or use an existing one -->
+    <!-- <script src="sdk.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@1.1.0"></script>
     <script>
         // Before we start doing anything, we need to init our Appwrite JS SDK
         var appwrite = new Appwrite();
@@ -214,11 +218,30 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            appwrite.auth.oauth(
-                'facebook',
-                'http://localhost:8080/?success', // Callback URL for success
-                'http://localhost:8080/?failure' // Callback URL for failure
+            let promise = appwrite.account.createOAuth2Session(
+                'google',
+                'http://localhost:8000/?success', // Callback URL for success
+                'http://localhost:8000/?failure' // Callback URL for failure
             );
+
+            promise.then(function (response) {
+                console.log(response); // Success
+            }, function (error) {
+                console.log(error); // Failure
+            });
+        }
+
+        
+        function deleteSession(event) {
+            event.preventDefault();
+            
+            let promise = appwrite.account.deleteSessions();
+
+            promise.then(function (response) {
+                console.log(response); // Success
+            }, function (error) {
+                console.log(error); // Failure
+            });
         }
 
         function getLocation() {

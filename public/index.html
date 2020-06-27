@@ -39,12 +39,11 @@
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithFacebook(event)">Login With Facebook</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGithub(event)">Login With Github</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithApple(event)">Login With Apple</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteSession(event)">Delete All Sessions</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLogs()">Get User Logs</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="logout()">Logout</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteSession(event)">Delete All Sessions</button>
     </div>
 
     <hr class="mb-5" />
@@ -180,15 +179,6 @@
             });
         }
 
-        function logout(event) {
-            let promise = appwrite.account.deleteSessions();
-
-            promise.then(function (response) {
-                alert('User has logout');
-            }, function (error) {
-                alert('Failed to logout!');
-            });
-        }
 
         function register(event) {
             event.preventDefault();

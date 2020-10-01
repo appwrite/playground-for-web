@@ -1,5 +1,7 @@
 # Appwrite's JS Playground 🎮
 
+*Read this in other languages: [English](README.md), [हिन्दी](README.hi.md)*
+
 **Work in Progress**
 
 Appwrite playground is a simple way to explore the Appwrite API & JS SDK (0.5 version). Use the source code of this page to learn how to use the different Appwrite JS SDK features.

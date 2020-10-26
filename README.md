@@ -16,10 +16,26 @@ This playground doesn't include any Appwrite best practices but rather intended 
 
 ### Installation
 
-1. Fork this repository and clone it.
-2. Run `npm install` command.
-3. Start a web server using `npm start` command.
-4. Access `http://localhost:8000` and start playing!
+`NOTE: Commands are to be executed on Linux, Mac, and Windows(using Powershell)`
+
+1. Fork this repository by clicking on the <a href="https://github.com/appwrite/playground-for-js/new/master?readme=1#fork-destination-box"><kbd><b>Fork</b></kbd></a> button.
+2. Clone the repo by running the command
+```sh
+$ git clone https://github.com/Your_Username/playground-for-js.git
+```
+3. Go inside the folder by command
+```sh
+$ cd playground-for-js
+```
+4. Run the command to install node modules
+```sh
+$ npm install
+```
+5. Start a web server by running using command
+```sh
+$ npm start
+```
+6. Access the url `http://localhost:8000` and start playing!
 
 ## Contributing
 

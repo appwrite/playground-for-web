@@ -108,8 +108,8 @@
     <!-- Include Appwrite JS SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="sdk.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/appwrite@1.1.0"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@1.2.0"></script>
+
     <script>
         // Before we start doing anything, we need to init our Appwrite JS SDK
         var appwrite = new Appwrite();
@@ -242,9 +242,6 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-
-            appwrite.database.listDocuments('collectionId', ['filt', 'sdsd'], 0, 50);
-
             let promise = appwrite.account.createOAuth2Session(
                 'facebook',
                 'http://localhost:8000/?success', // Callback URL for success

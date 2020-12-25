@@ -1,7 +1,7 @@
 {
   "name": "appwrite-playground-for-js",
   "version": "1.0.0",
-  "description": "Appwrite playground is a simple way to explore the Appwrite API & JS SDK. Use the source code of this page to learn how to use the different Appwrite JS SDK features.",
+  "description": "Appwrite playground is a simple way to explore the Appwrite API & Web SDK. Use the source code of this page to learn how to use the different Appwrite Web SDK features.",
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",

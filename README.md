@@ -1,4 +1,4 @@
-# Appwrite's JS Playground 🎮
+# Appwrite's Web Playground 🎮
 
 **Work in Progress**
 
@@ -18,14 +18,14 @@ This playground doesn't include any Appwrite best practices but rather intended 
 
 `NOTE: Commands are to be executed on Linux, Mac, and Windows(using Powershell)`
 
-1. Fork this repository by clicking on the <a href="https://github.com/appwrite/playground-for-js/new/master?readme=1#fork-destination-box"><kbd><b>Fork</b></kbd></a> button.
+1. Fork this repository by clicking on the <a href="https://github.com/appwrite/playground-for-web/new/master?readme=1#fork-destination-box"><kbd><b>Fork</b></kbd></a> button.
 2. Clone the repo by running the command
 ```sh
-$ git clone https://github.com/Your_Username/playground-for-js.git
+$ git clone https://github.com/Your_Username/playground-for-web.git
 ```
 3. Go inside the folder by command
 ```sh
-$ cd playground-for-js
+$ cd playground-for-web
 ```
 4. Run the command to install node modules
 ```sh

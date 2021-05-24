@@ -35,10 +35,12 @@
         <h2 class="mb-5">Auth & Account</h2>
 
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginAnonymously(event)">Login Anonymously</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGoogle(event)">Login With Google</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithFacebook(event)">Login With Facebook</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGithub(event)">Login With Github</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithApple(event)">Login With Apple</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="createJWT(event)">Create JWT</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
@@ -108,11 +110,11 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@1.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@3.0.3"></script>
 
     <script>
         // Before we start doing anything, we need to init our Appwrite Web SDK
-        var appwrite = new Appwrite();
+        var appwrite = new Appwrite.Appwrite();
 
         appwrite
             .setEndpoint('https://localhost/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
@@ -196,6 +198,24 @@
             }, function (error) {
                 alert('Failed to create account');
             });
+        }
+
+        function loginAnonymously(event) {
+            event.preventDefault();
+            appwrite.account.createAnonymousSession().then(function (response) {
+                alert('anonymous session created successfully!');
+            },function (error) {
+                alert('failed to create session');
+            })
+        }
+
+        function createJWT(event) {
+            event.preventDefault();
+            appwrite.account.createJWT().then(function (response) {
+                alert(response);
+            },function (error) {
+                alert('failed to create session');
+            })
         }
 
         function login(event) {

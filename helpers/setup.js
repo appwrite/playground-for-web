@@ -14,6 +14,7 @@ client
     .setSelfSigned(true)
     .setProject(config.project)
     .setKey(config.key)
+    // .setJWT('jwt') // set this to authenticate using JWT
     .setEndpoint(config.endpoint)
 ;
 

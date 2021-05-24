@@ -35,6 +35,7 @@
         <h2 class="mb-5">Auth & Account</h2>
 
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginAnonymously(event)">Login Anonymously</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGoogle(event)">Login With Google</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithFacebook(event)">Login With Facebook</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGithub(event)">Login With Github</button>
@@ -196,6 +197,15 @@
             }, function (error) {
                 alert('Failed to create account');
             });
+        }
+
+        function loginAnonymously(event) {
+            event.preventDefault();
+            appwrite.account.createAnonymousSession().then(function (response) {
+                alert('anonymous session created successfully!');
+            },function (error) {
+                alert('failed to create session');
+            })
         }
 
         function login(event) {

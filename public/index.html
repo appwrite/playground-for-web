@@ -40,6 +40,7 @@
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithFacebook(event)">Login With Facebook</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGithub(event)">Login With Github</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithApple(event)">Login With Apple</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="createJWT(event)">Create JWT</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
@@ -109,7 +110,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@3.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@3.0.3"></script>
 
     <script>
         // Before we start doing anything, we need to init our Appwrite Web SDK
@@ -203,6 +204,15 @@
             event.preventDefault();
             appwrite.account.createAnonymousSession().then(function (response) {
                 alert('anonymous session created successfully!');
+            },function (error) {
+                alert('failed to create session');
+            })
+        }
+
+        function createJWT(event) {
+            event.preventDefault();
+            appwrite.account.createJWT().then(function (response) {
+                alert(response);
             },function (error) {
                 alert('failed to create session');
             })

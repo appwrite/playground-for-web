@@ -147,14 +147,14 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite-realtime-preview"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@4.0.0"></script>
 
     <script>
         // Before we start doing anything, we need to init our Appwrite Web SDK
         const appwrite = new Appwrite();
 
         appwrite
-            .setEndpoint("https://realtime.appwrite.org/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setEndpoint("https://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
             .setProject("611cbff10e505"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         /**

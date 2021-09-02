@@ -1,51 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Appwrite Playground</title>
-  <meta name="description" content="A simple Appwrite demo app for gettig started with API integration">
-  <meta name="author" content="Appwrite Team">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,500,600,800" />
-  <link rel="icon" type="image/png" href="https://appwrite.io/images/favicon.png?v=1" />
+    <meta charset="utf-8" />
+    <title>Appwrite Playground</title>
+    <meta name="description" content="A simple Appwrite demo app for gettig started with API integration" />
+    <meta name="author" content="Appwrite Team" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,500,600,800" />
+    <link rel="icon" type="image/png" href="https://appwrite.io/images/favicon.png?v=1" />
 
-  <style>
-      body {
-        font-family: Poppins,sans-serif,Arial;
-        -webkit-font-smoothing: antialiased;
-        font-weight: 500;
-      }
-  </style>
+    <style>
+        body {
+            font-family: Poppins, sans-serif, Arial;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 500;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><img src="https://appwrite.io/images/appwrite-white.svg" height="22" /> &nbsp;playground</a>
+        <a class="navbar-brand" href="#"><img src="https://appwrite.io/images/appwrite-white.svg" height="22" />
+            &nbsp;playground</a>
     </nav>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-5 mb-5">Hello Appwriters!</h1>
-            <p class="lead">Appwrite playground is a simple way to explore the Appwrite API & Web SDK. Use the <a href="https://github.com/appwrite/playground-for-js/blob/master/public/index.html" target="_blank">source code</a> of this page to learn how to use the different Appwrite Web SDK features.</p>
+            <p class="lead">
+                Appwrite playground is a simple way to explore the Appwrite API & Web
+                SDK. Use the
+                <a href="https://github.com/appwrite/playground-for-js/blob/master/public/index.html"
+                    target="_blank">source code</a>
+                of this page to learn how to use the different Appwrite Web SDK
+                features.
+            </p>
         </div>
     </div>
-    
+
     <div class="container">
         <h2 class="mb-5">Auth & Account</h2>
 
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">Is Logged?</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginAnonymously(event)">Login Anonymously</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGoogle(event)">Login With Google</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithFacebook(event)">Login With Facebook</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGithub(event)">Login With Github</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithApple(event)">Login With Apple</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="createJWT(event)">Create JWT</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">Get User Name</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">Get User Email</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">Get User Sessions</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLogs()">Get User Logs</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteSession(event)">Delete All Sessions</button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isLogged()">
+            Is Logged?
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginAnonymously()">
+            Login Anonymously
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGoogle()">
+            Login With Google
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithFacebook()">
+            Login With Facebook
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithGithub()">
+            Login With Github
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="loginWithApple()">
+            Login With Apple
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="createJWT()">
+            Create JWT
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserName()">
+            Get User Name
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getUserEmail()">
+            Get User Email
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getSessions()">
+            Get User Sessions
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLogs()">
+            Get User Logs
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteSessions()">
+            Delete All Sessions
+        </button>
     </div>
 
     <hr class="mb-5" />
@@ -57,11 +90,13 @@
                 <form onsubmit="register(event);">
                     <div class="form-group">
                         <label for="register-email">Email</label>
-                        <input type="email" class="form-control" id="register-email" placeholder="Enter email" value="demo@example.com" required>
+                        <input type="email" class="form-control" id="register-email" placeholder="Enter email"
+                            value="demo@example.com" required />
                     </div>
                     <div class="form-group">
                         <label for="register-password">Password</label>
-                        <input type="password" class="form-control" id="register-password" placeholder="Password" value="password"  required pattern=".{6,}" title="Six or more characters">
+                        <input type="password" class="form-control" id="register-password" placeholder="Password"
+                            value="password" required pattern=".{6,}" title="Six or more characters" />
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
@@ -71,168 +106,207 @@
                 <form onsubmit="login(event);">
                     <div class="form-group">
                         <label for="login-email">Email</label>
-                        <input type="email" class="form-control" id="login-email" placeholder="Enter email" value="demo@example.com" required>
+                        <input type="email" class="form-control" id="login-email" placeholder="Enter email"
+                            value="demo@example.com" required />
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
-                        <input type="password" class="form-control" id="login-password" placeholder="Password" value="password"  required pattern=".{6,}" title="Six or more characters">
+                        <input type="password" class="form-control" id="login-password" placeholder="Password"
+                            value="password" required pattern=".{6,}" title="Six or more characters" />
                     </div>
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
             </div>
-            <!-- <div class="col-sm mb-5">
-                <h3 class="mb-4">Connect with OAuth</h3>
-                
-            </div> -->
         </div>
     </div>
 
     <hr class="mb-5" />
 
     <div class="container">
-        <h2 class="mb-5">Locale</h2>
-    
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLocation()">Get User Location</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getIP()">Get User IP</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isEU()">Is User a Member of the EU?</button>
+        <h2 class="mb-5">Realtime</h2>
+        <p>Create files in the Storage service to see them listed here in realtime.</p>
+        <ul id="realtime" class="list-group" />
     </div>
 
     <hr class="mb-5" />
 
-    <!-- <div class="container">
-        <h2 class="mb-5">Storage</h2>
-    
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLocation()">Get User Location</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getIP()">Get User IP</button>
-        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isEU()">Is User a Member of the EU?</button>
-    </div> -->
+    <div class="container">
+        <h2 class="mb-5">Locale</h2>
+
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getLocation()">
+            Get User Location
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="getIP()">
+            Get User IP
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="isEU()">
+            Is User a Member of the EU?
+        </button>
+    </div>
 
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@3.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@4.0.0"></script>
 
     <script>
         // Before we start doing anything, we need to init our Appwrite Web SDK
-        var appwrite = new Appwrite.Appwrite();
+        const appwrite = new Appwrite();
 
         appwrite
-            .setEndpoint('https://localhost/v1') // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject('5e63e0a61d9c2') // Your Appwrite Project UID, you can get it from your project settings page.
-        ;
+            .setEndpoint("https://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject("611cbff10e505"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         /**
          * Please Note!
-         * 
+         *
          * Don't ever integrate your Appwrite SDK with a secret key on client apps
          * like browsers, Android apps, iOS apps and other client platforms
          * like electron, XBOX and others.
          */
 
-         function isLogged(event) {
+        const realtimeElement = document.getElementById("realtime");
+
+        appwrite.subscribe("files", function(response) {
+            const entry = document.createElement("li");
+            const image = appwrite.storage.getFilePreview(response.payload.$id, 250);
+            const url = appwrite.storage.getFileView(response.payload.$id, 250);
+            entry.classList.add('list-group-item');
+            entry.innerHTML = `<a href="${url}" target=_blank><b>Event</b>: ${response.event}<br><img src="${image}" /></a>`;
+            realtimeElement.prepend(entry);
+        });
+
+        function isLogged() {
             let promise = appwrite.account.get();
 
-            promise.then(function (response) {
-                alert('User is Logged!');
-            }, function (error) {
-                alert('No User is Logged!');
-            });
+            promise.then(
+                function (response) {
+                    alert("User is Logged!");
+                },
+                function (error) {
+                    alert("No User is Logged!");
+                }
+            );
         }
 
-        function getUserName(event) {
+        function getUserName() {
             let promise = appwrite.account.get();
 
-            promise.then(function (response) {
-                alert(response.name);
-            }, function (error) {
-                alert('No User is Logged!');
-            });
+            promise.then(
+                function (response) {
+                    alert(response.name);
+                },
+                function (error) {
+                    alert("No User is Logged!");
+                }
+            );
         }
 
-        function getUserEmail(event) {
+        function getUserEmail() {
             let promise = appwrite.account.get();
 
-            promise.then(function (response) {
-                alert(response.email);
-            }, function (error) {
-                alert('No User is Logged!');
-            });
+            promise.then(
+                function (response) {
+                    alert(response.email);
+                },
+                function (error) {
+                    alert("No User is Logged!");
+                }
+            );
         }
 
-        function getSessions(event) {
+        function getSessions() {
             let promise = appwrite.account.getSessions();
 
-            promise.then(function (response) {
-                console.log('User Devices:', response);
-                alert('User has ' + response.length + ' active sessions. Check developer console for more info');
-            }, function (error) {
-                alert('No User is Logged!');
-            });
+            promise.then(
+                function (response) {
+                    console.log("User Devices:", response);
+                    alert(
+                        "User has " +
+                        response.sum +
+                        " active sessions. Check developer console for more info"
+                    );
+                },
+                function (error) {
+                    alert("No User is Logged!");
+                }
+            );
         }
 
-        function getLogs(event) {
+        function getLogs() {
             let promise = appwrite.account.getLogs();
 
-            promise.then(function (response) {
-                console.log('User Logs:', response);
-                alert('User has ' + response.length + ' logs. Check developer console for more info');
-            }, function (error) {
-                alert('No User is Logged!');
-            });
+            promise.then(
+                function (response) {
+                    console.log("User Logs:", response);
+                    alert(
+                        "User has " +
+                        response.logs.length +
+                        " logs. Check developer console for more info"
+                    );
+                },
+                function (error) {
+                    alert("No User is Logged!");
+                }
+            );
         }
-
 
         function register(event) {
             event.preventDefault();
-            /**
-             * Callback URLs are required for creating a browser
-             *  session cookie due to some browsers 3rd party cookie policy limitations,
-             *  this is not required for other client based platforms
-             */
-            appwrite.account.create(
-                event.target.elements['register-email'].value, // Email
-                event.target.elements['register-password'].value, // Password
-                'User Name'
-            ).then(function (response) {
-                alert('Account created succefully!');
-            }, function (error) {
-                alert('Failed to create account');
-            });
+            appwrite.account
+                .create(
+                    event.target.elements["register-email"].value, // Email
+                    event.target.elements["register-password"].value, // Password
+                    "User Name"
+                )
+                .then(
+                    function (response) {
+                        alert("Account created succefully!");
+                    },
+                    function (error) {
+                        alert("Failed to create account");
+                    }
+                );
         }
 
-        function loginAnonymously(event) {
-            event.preventDefault();
-            appwrite.account.createAnonymousSession().then(function (response) {
-                alert('anonymous session created successfully!');
-            },function (error) {
-                alert('failed to create session');
-            })
+        function loginAnonymously() {
+            appwrite.account.createAnonymousSession().then(
+                function (response) {
+                    alert("anonymous session created successfully!");
+                },
+                function (error) {
+                    alert("failed to create session");
+                }
+            );
         }
 
-        function createJWT(event) {
-            event.preventDefault();
-            appwrite.account.createJWT().then(function (response) {
-                alert(response);
-            },function (error) {
-                alert('failed to create session');
-            })
+        function createJWT() {
+            appwrite.account.createJWT().then(
+                function (response) {
+                    console.log("JWT: ", response);
+                    alert("JWT created.");
+                },
+                function (error) {
+                    alert("failed to create session");
+                }
+            );
         }
 
         function login(event) {
             event.preventDefault();
-            /**
-             * Callback URLs are required for creating a browser
-             *  session cookie due to some browsers 3rd party cookie policy limitations,
-             *  this is not required for other client based platforms
-             */
-            appwrite.account.createSession(
-                event.target.elements['login-email'].value, // Email
-                event.target.elements['login-password'].value, // Password
-            ).then(function (response) {
-                    alert('Session created succefully!');
-                }, function (error) {
-                    alert('Failed to create session');
-                });
+            appwrite.account
+                .createSession(
+                    event.target.elements["login-email"].value, // Email
+                    event.target.elements["login-password"].value // Password
+                )
+                .then(
+                    function (response) {
+                        alert("Session created succefully!");
+                    },
+                    function (error) {
+                        alert("Failed to create session");
+                    }
+                );
         }
 
         function loginWithGoogle(event) {
@@ -243,16 +317,19 @@
              *  this is not required for other client based platforms
              */
             let promise = appwrite.account.createOAuth2Session(
-                'google',
-                'http://localhost:8000/?success', // Callback URL for success
-                'http://localhost:8000/?failure', // Callback URL for failure
+                "google",
+                "http://localhost:8000/?success", // Callback URL for success
+                "http://localhost:8000/?failure" // Callback URL for failure
             );
 
-            promise.then(function (response) {
-                console.log(response); // Success
-            }, function (error) {
-                console.log(error); // Failure
-            });
+            promise.then(
+                function (response) {
+                    console.log(response); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
         }
 
         function loginWithFacebook(event) {
@@ -263,17 +340,20 @@
              *  this is not required for other client based platforms
              */
             let promise = appwrite.account.createOAuth2Session(
-                'facebook',
-                'http://localhost:8000/?success', // Callback URL for success
-                'http://localhost:8000/?failure', // Callback URL for failure
-                ['user_location']
+                "facebook",
+                "http://localhost:8000/?success", // Callback URL for success
+                "http://localhost:8000/?failure", // Callback URL for failure
+                ["user_location"]
             );
 
-            promise.then(function (response) {
-                console.log(response); // Success
-            }, function (error) {
-                console.log(error); // Failure
-            });
+            promise.then(
+                function (response) {
+                    console.log(response); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
         }
 
         function loginWithGithub(event) {
@@ -284,17 +364,20 @@
              *  this is not required for other client based platforms
              */
             let promise = appwrite.account.createOAuth2Session(
-                'github',
-                'http://localhost:8000/?success', // Callback URL for success
-                'http://localhost:8000/?failure', // Callback URL for failure
+                "github",
+                "http://localhost:8000/?success", // Callback URL for success
+                "http://localhost:8000/?failure", // Callback URL for failure
                 []
             );
 
-            promise.then(function (response) {
-                console.log(response); // Success
-            }, function (error) {
-                console.log(error); // Failure
-            });
+            promise.then(
+                function (response) {
+                    console.log(response); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
         }
 
         function loginWithApple(event) {
@@ -305,81 +388,104 @@
              *  this is not required for other client based platforms
              */
             let promise = appwrite.account.createOAuth2Session(
-                'apple',
-                'http://localhost:8000/?success', // Callback URL for success
-                'http://localhost:8000/?failure' // Callback URL for failure
+                "apple",
+                "http://localhost:8000/?success", // Callback URL for success
+                "http://localhost:8000/?failure" // Callback URL for failure
             );
 
-            promise.then(function (response) {
-                console.log(response); // Success
-            }, function (error) {
-                console.log(error); // Failure
-            });
+            promise.then(
+                function (response) {
+                    console.log(response); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
         }
 
-        function deleteSession(event) {
-            event.preventDefault();
-            
+        function deleteSessions() {
             let promise = appwrite.account.deleteSessions();
 
-            promise.then(function (response) {
-                console.log(response); // Success
-            }, function (error) {
-                console.log(error); // Failure
-            });
+            promise.then(
+                function (response) {
+                    console.log("All session deleted."); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
         }
 
         function getLocation() {
             let promise = appwrite.locale.get();
 
-            promise.then(function (response) {
-                alert('User is from ' + response.country + ', country code is: ' + response.countryCode);
-            }, function (error) {
-                alert('No User is Logged!');
-            });
+            promise.then(
+                function (response) {
+                    alert(
+                        "User is from " +
+                        response.country +
+                        ", country code is: " +
+                        response.countryCode
+                    );
+                },
+                function (error) {
+                    alert("No User is Logged!");
+                }
+            );
         }
 
         function getIP() {
             let promise = appwrite.locale.get();
 
-            promise.then(function (response) {
-                alert('User IP is: ' + response.ip);
-            }, function (error) {
-                alert('Failed to get user locale.');
-            });
+            promise.then(
+                function (response) {
+                    alert("User IP is: " + response.ip);
+                },
+                function (error) {
+                    alert("Failed to get user locale.");
+                }
+            );
         }
 
         function isEU() {
             let promise = appwrite.locale.get();
 
-            promise.then(function (response) {
-                alert((response.eu) ? 'User is a member of the EU' : 'User is not a member of the EU');
-            }, function (error) {
-                alert('Failed to get user locale.');
-            });
+            promise.then(
+                function (response) {
+                    alert(
+                        response.eu
+                            ? "User is a member of the EU"
+                            : "User is not a member of the EU"
+                    );
+                },
+                function (error) {
+                    alert("Failed to get user locale.");
+                }
+            );
         }
 
-        // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
-        //     'completed': true,
-        //     'text': 'a new task',
-        // }, ['*'], ['*']);
+      // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
+      //     'completed': true,
+      //     'text': 'a new task',
+      // }, ['*'], ['*']);
 
-        // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
-        //     'completed': true,
-        //     'text': 'a new task',
-        // });
+      // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
+      //     'completed': true,
+      //     'text': 'a new task',
+      // });
 
-        // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
-        //     'completed': true,
-        //     'text': 'a new task',
-        // }, ['user:{self}'], ['user:{self}']);
+      // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {
+      //     'completed': true,
+      //     'text': 'a new task',
+      // }, ['user:{self}'], ['user:{self}']);
 
-        // console.log('[INFO] Adding Todo');
-        // promise.then(function(response) {
-        //     console.log(response);
-        // }, function(error) {
-        //     console.log(error);
-        // });
+      // console.log('[INFO] Adding Todo');
+      // promise.then(function(response) {
+      //     console.log(response);
+      // }, function(error) {
+      //     console.log(error);
+      // });
     </script>
 </body>
+
 </html>

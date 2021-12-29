@@ -123,6 +123,35 @@
     <hr class="mb-5" />
 
     <div class="container">
+        <h2 class="mb-5">Storage</h2>
+        <div class="row">
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Add File</h3>
+                <div class="mb-3">
+                    <input class="form-control" type="file" id="uploader" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="createFile()">
+                    Upload File
+                </button>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">List Files</h3>
+                <button type="button" class="btn btn-primary" onclick="listFiles()">
+                    List Files
+                </button>
+                <div class="container mt-3">
+                    <div class="row">
+                        <ul id="list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr class="mb-5" />
+
+    <div class="container">
         <h2 class="mb-5">Realtime</h2>
         <p>Create files in the Storage service to see them listed here in realtime.</p>
         <ul id="realtime" class="list-group" />
@@ -147,15 +176,15 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@4.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@5.0.0"></script>
 
     <script>
         // Before we start doing anything, we need to init our Appwrite Web SDK
         const appwrite = new Appwrite();
 
         appwrite
-            .setEndpoint("https://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject("611cbff10e505"); // Your Appwrite Project UID, you can get it from your project settings page.
+            .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject("61c21638c5289"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         /**
          * Please Note!
@@ -414,6 +443,49 @@
                     console.log(error); // Failure
                 }
             );
+        }
+
+        function createFile() {
+            let promise = appwrite.storage.createFile(document.getElementById('uploader').files[0]);
+
+            promise.then(function (response) {
+                console.log(response); // Success
+                alert("File uploaded successfully");
+            }, function (error) {
+                console.log(error); // Failure
+            });
+        }
+
+        function listFiles() {
+            let promise = appwrite.storage.listFiles();
+
+            promise.then(function (response) {
+                var ul = document.getElementById("list");
+                ul.innerHTML = '';
+                for(let i=1; i<=response.sum; i++){
+                    var li = document.createElement("li");
+                    li.innerHTML = response.files[i-1].name;
+                    console.log(response.files[i-1].$id);
+                    li.onclick = function () { 
+                        getFile(response.files[i-1].$id);
+                    };
+                    ul.appendChild(li);
+                }
+                console.log(response); // Success
+            }, function (error) {
+                console.log(error); // Failure
+            });
+        }
+
+        function getFile(file_id) {
+            let promise = appwrite.storage.getFile(file_id);
+
+            promise.then(function (response) {
+                alert(JSON.stringify(response, undefined, 2));
+                console.log(response); // Success
+            }, function (error) {
+                console.log(error); // Failure
+            });
         }
 
         function getLocation() {

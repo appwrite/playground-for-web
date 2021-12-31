@@ -18,6 +18,10 @@
             -webkit-font-smoothing: antialiased;
             font-weight: 500;
         }
+        #list > li:hover {
+            color: #007BFF;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -127,12 +131,15 @@
         <div class="row">
             <div class="col-sm mb-5">
                 <h3 class="mb-4">Add File</h3>
-                <div class="mb-3">
-                    <input class="form-control" type="file" id="uploader" required>
-                </div>
-                <button type="button" class="btn btn-primary" onclick="createFile()">
-                    Upload File
-                </button>
+                <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="uploader" aria-describedby="inputGroupFileAddon04">
+                      <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button" id="inputGroupFileAddon04" onclick="createFile()">Upload File</button>
+                    </div>
+                  </div>
             </div>
             <div class="col-sm mb-5">
                 <h3 class="mb-4">List Files</h3>
@@ -146,7 +153,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
 
     <hr class="mb-5" />

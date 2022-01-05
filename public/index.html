@@ -147,7 +147,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@4.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.0"></script>
 
     <script>
         // Before we start doing anything, we need to init our Appwrite Web SDK
@@ -255,6 +255,7 @@
             event.preventDefault();
             appwrite.account
                 .create(
+                    "unique()",
                     event.target.elements["register-email"].value, // Email
                     event.target.elements["register-password"].value, // Password
                     "User Name"

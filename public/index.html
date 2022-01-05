@@ -453,7 +453,7 @@
         }
 
         function createFile() {
-            let promise = appwrite.storage.createFile(document.getElementById('uploader').files[0]);
+            let promise = appwrite.storage.createFile('unique()', document.getElementById('uploader').files[0]);
 
             promise.then(function (response) {
                 console.log(response); // Success

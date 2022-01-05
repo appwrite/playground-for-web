@@ -19,31 +19,15 @@ client
 ;
 
 const collectionName = 'tasks';
-const read = ['*'];
-const write = ['*'];
-const rules = [
-  {
-    'label': 'completed',
-    'key': 'completed',
-    'type': 'boolean',
-    'default': false,
-    'required': true,
-    'array': false,
-  },
-  {
-    'label': 'text',
-    'key': 'text',
-    'type': 'text',
-    'default': '',
-    'required': true,
-    'array': false,
-  },
-];
+const read = ['role:all'];
+const write = ['role:all'];
 
-const promise = database.createCollection(collectionName, read, write, rules);
+const promise = database.createCollection(collectionName, read, write);
 
 promise.then(function(response) {
   console.log('success');
+  database.createBooleanAttribute(response.$id, 'completed', true, false, false);
+  database.createStringAttribute(response.$id, 'text', 255, true, '', false);
 }, function(error) {
   console.log('error', error.type, error.message);
 });

@@ -23,6 +23,6 @@
   "dependencies": {
     "appwrite": "^5.0.0",
     "express": "^4.17.1",
-    "node-appwrite": "^2.5.1"
+    "node-appwrite": "^4.0.0"
   }
 }

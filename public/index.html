@@ -134,7 +134,7 @@
                 <div class="input-group">
                     <div class="custom-file">
                       <input type="file" class="custom-file-input" id="uploader" aria-describedby="inputGroupFileAddon04">
-                      <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                      <label class="custom-file-label" id="uploader-label" for="inputGroupFile04">Choose file</label>
                     </div>
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button" id="inputGroupFileAddon04" onclick="createFile()">Upload File</button>
@@ -182,15 +182,20 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.1"></script>
 
     <script>
+
+        document.getElementById('uploader').onchange = function () {
+            document.getElementById('uploader-label').innerHTML = this.files[0].name;
+        };
+
         // Before we start doing anything, we need to init our Appwrite Web SDK
         const appwrite = new Appwrite();
 
         appwrite
             .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject("61c21638c5289"); // Your Appwrite Project UID, you can get it from your project settings page.
+            .setProject("61cdb0f96ff7c7e495f0"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         /**
          * Please Note!

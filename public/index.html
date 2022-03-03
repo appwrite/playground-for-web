@@ -182,7 +182,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@7.0.0"></script>
 
     <script>
 
@@ -458,7 +458,7 @@
         }
 
         function createFile() {
-            let promise = appwrite.storage.createFile('unique()', document.getElementById('uploader').files[0]);
+            let promise = appwrite.storage.createFile('testbucket', 'unique()', document.getElementById('uploader').files[0]);
 
             promise.then(function (response) {
                 console.log(response); // Success
@@ -469,7 +469,7 @@
         }
 
         function listFiles() {
-            let promise = appwrite.storage.listFiles();
+            let promise = appwrite.storage.listFiles('testbucket');
 
             promise.then(function (response) {
                 var ul = document.getElementById("list");
@@ -490,7 +490,7 @@
         }
 
         function getFile(file_id) {
-            let promise = appwrite.storage.getFile(file_id);
+            let promise = appwrite.storage.getFile('testbucket', file_id);
 
             promise.then(function (response) {
                 alert(JSON.stringify(response, undefined, 2));

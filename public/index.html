@@ -83,6 +83,9 @@
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteSessions()">
             Delete All Sessions
         </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteCurrentSession()">
+            Delete Current Session
+        </button>
     </div>
 
     <hr class="mb-5" />
@@ -195,7 +198,7 @@
 
         appwrite
             .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject("61cdb0f96ff7c7e495f0"); // Your Appwrite Project UID, you can get it from your project settings page.
+            .setProject("62387717329626ff1d5a"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         /**
          * Please Note!
@@ -209,8 +212,9 @@
 
         appwrite.subscribe("files", function(response) {
             const entry = document.createElement("li");
-            const image = appwrite.storage.getFilePreview(response.payload.$id, 250);
-            const url = appwrite.storage.getFileView(response.payload.$id, 250);
+            const image = appwrite.storage.getFilePreview('testbucket', response.payload.$id, 250);
+            const url = appwrite.storage.getFileView('testbucket', response.payload.$id, 250);
+            console.log(image, url)
             entry.classList.add('list-group-item');
             entry.innerHTML = `<a href="${url}" target=_blank><b>Event</b>: ${response.event}<br><img src="${image}" /></a>`;
             realtimeElement.prepend(entry);
@@ -450,6 +454,19 @@
             promise.then(
                 function (response) {
                     console.log("All session deleted."); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
+        }
+
+        function deleteCurrentSession() {
+            let promise = appwrite.account.deleteSession('current');
+
+            promise.then(
+                function (response) {
+                    console.log("Current session deleted."); // Success
                 },
                 function (error) {
                     console.log(error); // Failure

@@ -86,6 +86,12 @@
         <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="deleteCurrentSession()">
             Delete Current Session
         </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="createTeam()">
+            Create Team
+        </button>
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="createTeamMembership()">
+            Create Team Membership
+        </button>
     </div>
 
     <hr class="mb-5" />
@@ -214,10 +220,13 @@
             const entry = document.createElement("li");
             const image = appwrite.storage.getFilePreview('testbucket', response.payload.$id, 250);
             const url = appwrite.storage.getFileView('testbucket', response.payload.$id, 250);
-            console.log(image, url)
             entry.classList.add('list-group-item');
             entry.innerHTML = `<a href="${url}" target=_blank><b>Event</b>: ${response.event}<br><img src="${image}" /></a>`;
             realtimeElement.prepend(entry);
+        });
+
+        appwrite.subscribe(['teams', 'memberships', 'accounts'], function(response) {
+            console.log(response)
         });
 
         function isLogged() {
@@ -347,6 +356,10 @@
                 .then(
                     function (response) {
                         alert("Session created succefully!");
+                        appwrite.subscribe("account", function(response) {
+                            console.log('Received Account event', response);
+                        });
+
                     },
                     function (error) {
                         alert("Failed to create session");
@@ -467,6 +480,34 @@
             promise.then(
                 function (response) {
                     console.log("Current session deleted."); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
+        }
+
+        function createTeam() {
+            let promise = appwrite.teams.create('test', 'Test Team');
+
+            promise.then(
+                function (response) {
+                    console.log("Team created."); // Success
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
+        }
+
+        function createTeamMembership() {
+            let random = Math.floor(1000 + Math.random() * 9000);
+            let email = "test+" + random + "@test.com";
+            let promise = appwrite.teams.createMembership('test', email, ['admin'], 'http://localhost');
+
+            promise.then(
+                function (response) {
+                    console.log("Membership created."); // Success
                 },
                 function (error) {
                     console.log(error); // Failure

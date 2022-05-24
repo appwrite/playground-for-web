@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/appwrite/playground-for-js#readme",
   "dependencies": {
-    "appwrite": "^7.0.0",
+    "appwrite": "^8.0.1",
     "express": "^4.17.2",
     "node-appwrite": "5.0.0"
   }

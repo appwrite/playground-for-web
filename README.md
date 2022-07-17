@@ -1,14 +1,12 @@
 # Appwrite's Web Playground 🎮
 
-**Work in Progress**
-
-Appwrite playground is a simple way to explore the Appwrite API & Web SDK (0.6.* version). Use the source code of this page to learn how to use the different Appwrite Web SDK features.
+Appwrite playground is a simple way to explore the Appwrite API & Web SDK. Use the source code of this page to learn how to use the different Appwrite Web SDK features.
 
 ![Appwrite Playground](preview.png)
 
 ## Get Started
 
-The **demo/index.html** file in this repository contains **all** the playground examples and source code.
+The **public/index.html** file in this repository contains **all** the playground examples and source code.
 
 You can learn how to to integrate your Appwrite Web SDK in your project and see how different features of the SDK can be used.
 
@@ -36,6 +34,8 @@ $ npm install
 $ npm start
 ```
 6. Access the url `http://localhost:8000` and start playing!
+
+> Don't forget to update Appwrite endpoint and project ID
 
 ## Contributing
 

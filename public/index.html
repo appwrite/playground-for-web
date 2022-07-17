@@ -191,7 +191,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@8.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1"></script>
 
     <script>
 
@@ -200,11 +200,17 @@
         };
 
         // Before we start doing anything, we need to init our Appwrite Web SDK
-        const appwrite = new Appwrite();
+        const client = new Appwrite.Client();
 
-        appwrite
-            .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject("62387717329626ff1d5a"); // Your Appwrite Project UID, you can get it from your project settings page.
+        client
+            .setEndpoint("https://8080-appwrite-appwrite-f0f48rxk0hl.ws-eu54.gitpod.io/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject("dev"); // Your Appwrite Project UID, you can get it from your project settings page.
+
+        // Prepare all services we are going to use
+        const account = new Appwrite.Account(client);
+        const storage = new Appwrite.Storage(client);
+        const teams = new Appwrite.Teams(client);
+        const locale = new Appwrite.Locale(client);
 
         /**
          * Please Note!
@@ -216,21 +222,21 @@
 
         const realtimeElement = document.getElementById("realtime");
 
-        appwrite.subscribe("files", function(response) {
+        client.subscribe("files", function(response) {
             const entry = document.createElement("li");
-            const image = appwrite.storage.getFilePreview('testbucket', response.payload.$id, 250);
-            const url = appwrite.storage.getFileView('testbucket', response.payload.$id, 250);
+            const image = storage.getFilePreview('testbucket', response.payload.$id, 250);
+            const url = storage.getFileView('testbucket', response.payload.$id, 250);
             entry.classList.add('list-group-item');
-            entry.innerHTML = `<a href="${url}" target=_blank><b>Event</b>: ${response.event}<br><img src="${image}" /></a>`;
+            entry.innerHTML = `<a href="${url}" target=_blank><b>Events</b>: ${response.events}<br><img src="${image}" /></a>`;
             realtimeElement.prepend(entry);
         });
 
-        appwrite.subscribe(['teams', 'memberships', 'accounts'], function(response) {
+        client.subscribe(['teams', 'memberships', 'accounts'], function(response) {
             console.log(response)
         });
 
         function isLogged() {
-            let promise = appwrite.account.get();
+            let promise = account.get();
 
             promise.then(
                 function (response) {
@@ -243,7 +249,7 @@
         }
 
         function getUserName() {
-            let promise = appwrite.account.get();
+            let promise = account.get();
 
             promise.then(
                 function (response) {
@@ -256,7 +262,7 @@
         }
 
         function getUserEmail() {
-            let promise = appwrite.account.get();
+            let promise = account.get();
 
             promise.then(
                 function (response) {
@@ -269,14 +275,14 @@
         }
 
         function getSessions() {
-            let promise = appwrite.account.getSessions();
+            let promise = account.getSessions();
 
             promise.then(
                 function (response) {
                     console.log("User Devices:", response);
                     alert(
                         "User has " +
-                        response.sum +
+                        response.total +
                         " active sessions. Check developer console for more info"
                     );
                 },
@@ -287,7 +293,7 @@
         }
 
         function getLogs() {
-            let promise = appwrite.account.getLogs();
+            let promise = account.getLogs();
 
             promise.then(
                 function (response) {
@@ -306,7 +312,7 @@
 
         function register(event) {
             event.preventDefault();
-            appwrite.account
+            account
                 .create(
                     "unique()",
                     event.target.elements["register-email"].value, // Email
@@ -324,7 +330,7 @@
         }
 
         function loginAnonymously() {
-            appwrite.account.createAnonymousSession().then(
+            account.createAnonymousSession().then(
                 function (response) {
                     alert("anonymous session created successfully!");
                 },
@@ -335,7 +341,7 @@
         }
 
         function createJWT() {
-            appwrite.account.createJWT().then(
+            account.createJWT().then(
                 function (response) {
                     console.log("JWT: ", response);
                     alert("JWT created.");
@@ -348,15 +354,15 @@
 
         function login(event) {
             event.preventDefault();
-            appwrite.account
-                .createSession(
+            account
+                .createEmailSession(
                     event.target.elements["login-email"].value, // Email
                     event.target.elements["login-password"].value // Password
                 )
                 .then(
                     function (response) {
                         alert("Session created succefully!");
-                        appwrite.subscribe("account", function(response) {
+                        client.subscribe("account", function(response) {
                             console.log('Received Account event', response);
                         });
 
@@ -374,7 +380,7 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = appwrite.account.createOAuth2Session(
+            let promise = account.createOAuth2Session(
                 "google",
                 "http://localhost:8000/?success", // Callback URL for success
                 "http://localhost:8000/?failure" // Callback URL for failure
@@ -397,7 +403,7 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = appwrite.account.createOAuth2Session(
+            let promise = account.createOAuth2Session(
                 "facebook",
                 "http://localhost:8000/?success", // Callback URL for success
                 "http://localhost:8000/?failure", // Callback URL for failure
@@ -421,7 +427,7 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = appwrite.account.createOAuth2Session(
+            let promise = account.createOAuth2Session(
                 "github",
                 "http://localhost:8000/?success", // Callback URL for success
                 "http://localhost:8000/?failure", // Callback URL for failure
@@ -445,7 +451,7 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = appwrite.account.createOAuth2Session(
+            let promise = account.createOAuth2Session(
                 "apple",
                 "http://localhost:8000/?success", // Callback URL for success
                 "http://localhost:8000/?failure" // Callback URL for failure
@@ -462,7 +468,7 @@
         }
 
         function deleteSessions() {
-            let promise = appwrite.account.deleteSessions();
+            let promise = account.deleteSessions();
 
             promise.then(
                 function (response) {
@@ -475,7 +481,7 @@
         }
 
         function deleteCurrentSession() {
-            let promise = appwrite.account.deleteSession('current');
+            let promise = account.deleteSession('current');
 
             promise.then(
                 function (response) {
@@ -488,14 +494,14 @@
         }
 
         function createTeam() {
-            let promise = appwrite.teams.create('test', 'Test Team');
+            let promise = teams.create('test', 'Test Team');
 
             promise.then(
                 function (response) {
-                    console.log("Team created."); // Success
+                    alert("Team created."); // Success
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert(error); // Failure
                 }
             );
         }
@@ -503,20 +509,20 @@
         function createTeamMembership() {
             let random = Math.floor(1000 + Math.random() * 9000);
             let email = "test+" + random + "@test.com";
-            let promise = appwrite.teams.createMembership('test', email, ['admin'], 'http://localhost');
+            let promise = teams.createMembership('test', email, ['admin'], 'http://localhost');
 
             promise.then(
                 function (response) {
-                    console.log("Membership created."); // Success
+                    alert("Membership created."); // Success
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert(error); // Failure
                 }
             );
         }
 
         function createFile() {
-            let promise = appwrite.storage.createFile('testbucket', 'unique()', document.getElementById('uploader').files[0]);
+            let promise = storage.createFile('testbucket', 'unique()', document.getElementById('uploader').files[0]);
 
             promise.then(function (response) {
                 console.log(response); // Success
@@ -527,12 +533,12 @@
         }
 
         function listFiles() {
-            let promise = appwrite.storage.listFiles('testbucket');
+            let promise = storage.listFiles('testbucket');
 
             promise.then(function (response) {
                 var ul = document.getElementById("list");
                 ul.innerHTML = '';
-                for(let i=1; i<=response.sum; i++){
+                for(let i=1; i<=response.total; i++){
                     var li = document.createElement("li");
                     li.innerHTML = response.files[i-1].name;
                     console.log(response.files[i-1].$id);
@@ -548,7 +554,7 @@
         }
 
         function getFile(file_id) {
-            let promise = appwrite.storage.getFile('testbucket', file_id);
+            let promise = storage.getFile('testbucket', file_id);
 
             promise.then(function (response) {
                 alert(JSON.stringify(response, undefined, 2));
@@ -559,7 +565,7 @@
         }
 
         function getLocation() {
-            let promise = appwrite.locale.get();
+            let promise = locale.get();
 
             promise.then(
                 function (response) {
@@ -577,7 +583,7 @@
         }
 
         function getIP() {
-            let promise = appwrite.locale.get();
+            let promise = locale.get();
 
             promise.then(
                 function (response) {
@@ -590,7 +596,7 @@
         }
 
         function isEU() {
-            let promise = appwrite.locale.get();
+            let promise = locale.get();
 
             promise.then(
                 function (response) {

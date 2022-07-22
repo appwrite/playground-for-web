@@ -203,8 +203,8 @@
         const client = new Appwrite.Client();
 
         client
-            .setEndpoint("https://8080-appwrite-appwrite-f0f48rxk0hl.ws-eu54.gitpod.io/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject("dev"); // Your Appwrite Project UID, you can get it from your project settings page.
+            .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setProject("test"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         // Prepare all services we are going to use
         const account = new Appwrite.Account(client);
@@ -311,7 +311,6 @@
         }
 
         function register(event) {
-            event.preventDefault();
             account
                 .create(
                     "unique()",
@@ -353,7 +352,6 @@
         }
 
         function login(event) {
-            event.preventDefault();
             account
                 .createEmailSession(
                     event.target.elements["login-email"].value, // Email
@@ -374,7 +372,6 @@
         }
 
         function loginWithGoogle(event) {
-            event.preventDefault();
             /**
              * Callback URLs are required for creating a browser
              *  session cookie due to some browsers 3rd party cookie policy limitations,
@@ -397,7 +394,6 @@
         }
 
         function loginWithFacebook(event) {
-            event.preventDefault();
             /**
              * Callback URLs are required for creating a browser
              *  session cookie due to some browsers 3rd party cookie policy limitations,
@@ -421,7 +417,6 @@
         }
 
         function loginWithGithub(event) {
-            event.preventDefault();
             /**
              * Callback URLs are required for creating a browser
              *  session cookie due to some browsers 3rd party cookie policy limitations,
@@ -445,7 +440,6 @@
         }
 
         function loginWithApple(event) {
-            event.preventDefault();
             /**
              * Callback URLs are required for creating a browser
              *  session cookie due to some browsers 3rd party cookie policy limitations,

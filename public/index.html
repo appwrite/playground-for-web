@@ -301,8 +301,10 @@
         let databaseId = 'test';
         let collectionId = 'test';
         let bucketId = 'test';
+        let functionId = 'test';
         let documentId;
         let fileId;
+        let executionId;
         let userId;
         let teamId;
         let membershipId;
@@ -791,6 +793,52 @@
                 alert("Failed to delete file.");
                 console.log(error);
             });
+        }
+
+        function createExecution() {
+            let promise = functions.createExecution(functionId);
+
+            promise.then(
+                function (response) {
+                    alert("Execution created."); // Success
+                    console.log(response);
+                    executionId = response.$id;
+                },
+                function (error) {
+                    alert("Failed to create execution."); // Failure
+                    console.log(error);
+                }
+            );
+        }
+
+        function listExecutions() {
+            let promise = functions.listExecutions(functionId);
+
+            promise.then(
+                function (response) {
+                    alert("Executions listed."); // Success
+                    console.log(response);
+                },
+                function (error) {
+                    alert(error); // Failure
+                    console.log(error);
+                }
+            );
+        }
+
+        function getExecution() {
+            let promise = functions.getExecution(functionId, executionId);
+
+            promise.then(
+                function (response) {
+                    alert("Execution fetched."); // Success
+                    console.log(response);
+                },
+                function (error) {
+                    alert("Failed to fetch execution."); // Failure
+                    console.log(error);
+                }
+            );
         }
 
         function getLocation() {

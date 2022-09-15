@@ -181,8 +181,71 @@
 
     <hr class="mb-5"/>
 
+    <div class="container">
+        <h2 class="mb-5">Databases</h2>
+        <div class="row">
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Create Document</h3>
+                <button type="button" class="btn btn-primary" onclick="createDocument()">
+                    Create Document
+                </button>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">List Documents</h3>
+                <button type="button" class="btn btn-primary" onclick="listDocuments()">
+                    List Documents
+                </button>
+                <div class="container mt-3">
+                    <div class="row">
+                        <ul id="documentList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Get Document</h3>
+                <button type="button" class="btn btn-primary" onclick="getDocument()">
+                    Get Document
+                </button>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Delete Document</h3>
+                <button type="button" class="btn btn-primary" onclick="deleteDocument()">
+                    Delete Document
+                </button>
+            </div>
+        </div>
+    </div>
 
     <hr class="mb-5"/>
+
+    <div class="container">
+        <h2 class="mb-5">Functions</h2>
+        <div class="row">
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Create Execution</h3>
+                <button type="button" class="btn btn-primary" onclick="createExecution()">
+                    Create Execution
+                </button>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">List Executions</h3>
+                <button type="button" class="btn btn-primary" onclick="listExecutions()">
+                    List Executions
+                </button>
+                <div class="container mt-3">
+                    <div class="row">
+                        <ul id="executionList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm mb-5">
+                <h3 class="mb-4">Get Execution</h3>
+                <button type="button" class="btn btn-primary" onclick="getExecution()">
+                    Get Execution
+                </button>
+            </div>
+        </div>
+    </div>
 
     <hr class="mb-5"/>
 
@@ -235,7 +298,10 @@
         const functions = new Appwrite.Functions(client);
 
         // Declare ID's we will need
+        let databaseId = 'test';
+        let collectionId = 'test';
         let bucketId = 'test';
+        let documentId;
         let fileId;
         let userId;
         let teamId;
@@ -572,6 +638,94 @@
             );
         }
 
+        function createDocument() {
+            let promise = databases.createDocument(
+                databaseId,
+                collectionId,
+                Appwrite.ID.unique(),
+                {
+                    'username': 'Web SDK',
+                },
+                [
+                    Appwrite.Permission.read(Appwrite.Role.any()),
+                    Appwrite.Permission.update(Appwrite.Role.users()),
+                    Appwrite.Permission.delete(Appwrite.Role.users()),
+                ]
+            );
+
+            promise.then(
+                function (response) {
+                    alert("Document created."); // Success
+                    console.log(response);
+                    documentId = response.$id;
+                },
+                function (error) {
+                    alert("Failed to create document."); // Failure
+                    console.log(error);
+                }
+            );
+        }
+
+        function listDocuments() {
+            let promise = databases.listDocuments(
+                databaseId,
+                collectionId,
+                [
+                    Appwrite.Query.equal('username', 'Web SDK')
+                ]
+            );
+
+            promise.then(
+                function (response) {
+                    const ul = document.getElementById("documentList");
+                    ul.innerHTML = '';
+                    for (let i = 1; i <= response.total; i++) {
+                        const li = document.createElement("li");
+                        li.innerHTML = response.documents[i - 1].$id;
+                        ul.appendChild(li);
+                    }
+                    console.log(response);
+                },
+                function (error) {
+                    alert("Failed to list documents."); // Failure
+                    console.log(error);
+                }
+            );
+        }
+
+        function getDocument() {
+            let promise = databases.getDocument(
+                databaseId,
+                collectionId,
+                documentId
+            );
+
+            promise.then(
+                function (response) {
+                    alert("Document fetched."); // Success
+                    console.log(response);
+                },
+                function (error) {
+                    alert("Failed to fetch document."); // Failure
+                    console.log(error);
+                }
+            );
+        }
+
+        function deleteDocument() {
+            let promise = databases.deleteDocument(
+                databaseId,
+                collectionId,
+                documentId
+            );
+
+            promise.then(
+                function (response) {
+                    alert("Document deleted."); // Success
+                },
+                function (error) {
+                    alert("Failed to delete document."); // Failure
+                    console.log(error);
                 }
             );
         }

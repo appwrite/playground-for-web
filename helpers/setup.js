@@ -1,34 +1,65 @@
-const sdk = require('node-appwrite');
-const config = {
-  project: '5d8fa6deefd05',
-  endpoint: 'https://localhost/v1',
-  key: '1589eb89e0c0153892c68867ea44137581a7a91390668ab1966a9c3a30a4d9ace58de90b3eaf61c0eae3f35e886b3d01cc8a674caf630c25a4428021ba0697cca5047b42bafb6710911e88fb1553d2833a221a94d2dc6fb55b7e500bc7873c4f09aab939e47aa959d55a972beacec8f7b86852b6842f4ca606908dea9d1cc7df',
-};
+const sdk = require("node-appwrite");
 
 // Init SDK
 const client = new sdk.Client();
 
-const database = new sdk.Database(client);
+const databases = new sdk.Databases(client);
+const storage = new sdk.Storage(client);
 
 client
-    .setSelfSigned(true)
-    .setProject(config.project)
-    .setKey(config.key)
-    // .setJWT('jwt') // set this to authenticate using JWT
-    .setEndpoint(config.endpoint)
-;
+  .setSelfSigned(true)
+  .setProject("playground")
+  .setKey(
+    "beb1e9fdeece6048ffa707a8cf19f3f645bce784def5135f3f8f5c91e382570ac26df1180105ba50068df79a20687fbc5b2af525fe2962550f42840175656444584cc84e97ec4b5ae57e342b912949c98224bac9d64ba6f3531ba33da707a07e0b0adb4155b95fbd32918aafba87338ab4c131f76d786cff4406c2af6bba9ef4"
+  )
+  // .setJWT('jwt') // set this to authenticate using JWT
+  .setEndpoint("https://localhost/v1");
 
-const collectionName = 'tasks';
-const read = ['role:all'];
-const write = ['role:all'];
+(async function () {
+  try {
+    await databases.create("playground-db", "Playground Database");
+    console.log("successfully created database");
 
-const promise = database.createCollection(collectionName, read, write);
+    await databases.createCollection(
+      "playground-db",
+      "playground-collection",
+      "Playground Collection",
+      [
+        sdk.Permission.create("any"),
+        sdk.Permission.read("any"),
+        sdk.Permission.update("any"),
+        sdk.Permission.delete("any"),
+      ]
+    );
+    console.log("successfully created collection");
 
-promise.then(function(response) {
-  console.log('success');
-  database.createBooleanAttribute(response.$id, 'completed', true, false, false);
-  database.createStringAttribute(response.$id, 'text', 255, true, '', false);
-}, function(error) {
-  console.log('error', error.type, error.message);
-});
+    await databases.createBooleanAttribute(
+      "playground-db",
+      "playground-collection",
+      "completed",
+      true
+    );
+    console.log("successfully created completed attribute");
 
+    await databases.createStringAttribute(
+      "playground-db",
+      "playground-collection",
+      "text",
+      255,
+      true,
+      "",
+      false
+    );
+    console.log("successfully created text attribute");
+
+    await storage.createBucket("playground-bucket", "Playground Bucket", [
+      sdk.Permission.create("any"),
+      sdk.Permission.read("any"),
+      sdk.Permission.update("any"),
+      sdk.Permission.delete("any"),
+    ]);
+    console.log("successfully created playground-bucket");
+  } catch (error) {
+    console.log("error", error.type, error.message);
+  }
+})();

@@ -4,6 +4,22 @@ Appwrite playground is a simple way to explore the Appwrite API & Web SDK. Use t
 
 ![Appwrite Playground](preview.png)
 
+## Appwrite Install
+If you have never setup Appwrite locally before there are a few steps.
+
+- You must have [Docker](https://docs.docker.com/engine/install/) installed.
+- Run docker compose command from the [Appwrite Installation Docs](https://appwrite.io/docs/installation).
+- Reference the [Appwrite 101 - YouTube Playlist](https://youtu.be/aO4mw8smXkI)
+- If you are running a remote Appwrite instance change `http://localhost/v1` in the [configuration](https://github.com/appwrite/playground-for-web/blob/fcd5aa02976f6787d14720a4e920402fafa6175b/public/index.html#L205) to your Appwrite url.
+
+### Initial Setup
+
+Execute the below steps if you would like to automatically setup the project.
+
+- Create project in [console](http://localhost/console/home) with key `playground` and Name `Playground`
+- [Generate API Key](http://localhost/console/keys?project=playground)
+- In `./helpers/setup.js` update the `setKey` method with your new value
+- Run command `node ./helpers/setup.js`
 ## Get Started
 
 The **public/index.html** file in this repository contains **all** the playground examples and source code.

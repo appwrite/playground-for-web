@@ -191,7 +191,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@10.1.0"></script>
 
     <script>
 
@@ -204,7 +204,7 @@
 
         client
             .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
-            .setProject("test"); // Your Appwrite Project UID, you can get it from your project settings page.
+            .setProject("playground"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         // Prepare all services we are going to use
         const account = new Appwrite.Account(client);
@@ -224,8 +224,8 @@
 
         client.subscribe("files", function(response) {
             const entry = document.createElement("li");
-            const image = storage.getFilePreview('testbucket', response.payload.$id, 250);
-            const url = storage.getFileView('testbucket', response.payload.$id, 250);
+            const image = storage.getFilePreview('playground-bucket', response.payload.$id, 250);
+            const url = storage.getFileView('playground-bucket', response.payload.$id, 250);
             entry.classList.add('list-group-item');
             entry.innerHTML = `<a href="${url}" target=_blank><b>Events</b>: ${response.events}<br><img src="${image}" /></a>`;
             realtimeElement.prepend(entry);
@@ -275,7 +275,7 @@
         }
 
         function getSessions() {
-            let promise = account.getSessions();
+            let promise = account.listSessions();
 
             promise.then(
                 function (response) {
@@ -293,7 +293,7 @@
         }
 
         function getLogs() {
-            let promise = account.getLogs();
+            let promise = account.listLogs();
 
             promise.then(
                 function (response) {
@@ -311,6 +311,7 @@
         }
 
         function register(event) {
+            event.preventDefault();
             account
                 .create(
                     "unique()",
@@ -352,6 +353,7 @@
         }
 
         function login(event) {
+            event.preventDefault();
             account
                 .createEmailSession(
                     event.target.elements["login-email"].value, // Email
@@ -516,18 +518,19 @@
         }
 
         function createFile() {
-            let promise = storage.createFile('testbucket', 'unique()', document.getElementById('uploader').files[0]);
+            let promise = storage.createFile('playground-bucket', 'unique()', document.getElementById('uploader').files[0]);
 
             promise.then(function (response) {
                 console.log(response); // Success
                 alert("File uploaded successfully");
             }, function (error) {
                 console.log(error); // Failure
+                alert("File failed to upload");
             });
         }
 
         function listFiles() {
-            let promise = storage.listFiles('testbucket');
+            let promise = storage.listFiles('playground-bucket');
 
             promise.then(function (response) {
                 var ul = document.getElementById("list");
@@ -548,7 +551,7 @@
         }
 
         function getFile(file_id) {
-            let promise = storage.getFile('testbucket', file_id);
+            let promise = storage.getFile('playground-bucket', file_id);
 
             promise.then(function (response) {
                 alert(JSON.stringify(response, undefined, 2));

@@ -203,7 +203,7 @@
         const client = new Appwrite.Client();
 
         client
-            .setEndpoint("http://localhost/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
+            .setEndpoint("https://cloud.appwrite.io/v1") // Set your own appwrite server endpoint here, if not sure, you can get this value from your project settings page.
             .setProject("test"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         // Prepare all services we are going to use
@@ -246,6 +246,8 @@
                     alert("No User is Logged!");
                 }
             );
+
+            event.preventDefault();
         }
 
         function getUserName() {
@@ -259,6 +261,8 @@
                     alert("No User is Logged!");
                 }
             );
+
+            event.preventDefault();
         }
 
         function getUserEmail() {
@@ -272,6 +276,8 @@
                     alert("No User is Logged!");
                 }
             );
+
+            event.preventDefault();
         }
 
         function getSessions() {
@@ -290,6 +296,8 @@
                     alert("No User is Logged!");
                 }
             );
+
+            event.preventDefault();
         }
 
         function getLogs() {
@@ -308,6 +316,8 @@
                     alert("No User is Logged!");
                 }
             );
+
+            event.preventDefault();
         }
 
         function register(event) {
@@ -326,6 +336,8 @@
                         alert("Failed to create account");
                     }
                 );
+
+            event.preventDefault();
         }
 
         function loginAnonymously() {
@@ -337,6 +349,8 @@
                     alert("failed to create session");
                 }
             );
+
+            event.preventDefault();
         }
 
         function createJWT() {
@@ -349,6 +363,8 @@
                     alert("failed to create session");
                 }
             );
+
+            event.preventDefault();
         }
 
         function login(event) {
@@ -369,6 +385,8 @@
                         alert("Failed to create session");
                     }
                 );
+            
+            event.preventDefault();
         }
 
         function loginWithGoogle(event) {
@@ -391,6 +409,8 @@
                     console.log(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function loginWithFacebook(event) {
@@ -414,6 +434,8 @@
                     console.log(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function loginWithGithub(event) {
@@ -437,6 +459,8 @@
                     console.log(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function loginWithApple(event) {
@@ -459,6 +483,8 @@
                     console.log(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function deleteSessions() {
@@ -472,6 +498,8 @@
                     console.log(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function deleteCurrentSession() {
@@ -485,6 +513,8 @@
                     console.log(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function createTeam() {
@@ -498,6 +528,8 @@
                     alert(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function createTeamMembership() {
@@ -513,6 +545,8 @@
                     alert(error); // Failure
                 }
             );
+
+            event.preventDefault();
         }
 
         function createFile() {
@@ -524,6 +558,8 @@
             }, function (error) {
                 console.log(error); // Failure
             });
+
+            event.preventDefault();
         }
 
         function listFiles() {
@@ -545,6 +581,8 @@
             }, function (error) {
                 console.log(error); // Failure
             });
+
+            event.preventDefault();
         }
 
         function getFile(file_id) {
@@ -556,6 +594,8 @@
             }, function (error) {
                 console.log(error); // Failure
             });
+
+            event.preventDefault();
         }
 
         function getLocation() {
@@ -574,6 +614,8 @@
                     alert("No User is Logged!");
                 }
             );
+
+            event.preventDefault();
         }
 
         function getIP() {
@@ -587,6 +629,8 @@
                     alert("Failed to get user locale.");
                 }
             );
+
+            event.preventDefault();
         }
 
         function isEU() {
@@ -604,6 +648,8 @@
                     alert("Failed to get user locale.");
                 }
             );
+
+            event.preventDefault();
         }
 
       // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {

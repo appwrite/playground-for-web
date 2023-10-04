@@ -8,9 +8,9 @@ Appwrite playground is a simple way to explore the Appwrite API & Web SDK. Use t
 
 The **public/index.html** file in this repository contains **all** the playground examples and source code.
 
-You can learn how to to integrate your Appwrite Web SDK in your project and see how different features of the SDK can be used.
+You can learn how to integrate your Appwrite Web SDK into your project and see how different features of the SDK can be used.
 
-This playground doesn't include any Appwrite best practices but rather intended to show the most simple examples and use cases of using the Appwrite API.
+This playground doesn't include any Appwrite best practices but rather intends to show the most simple examples and use cases of using the Appwrite API.
 
 ### Installation
 
@@ -21,7 +21,7 @@ This playground doesn't include any Appwrite best practices but rather intended 
 ```sh
 $ git clone https://github.com/Your_Username/playground-for-web.git
 ```
-3. Go inside the folder by command
+3. Go inside the folder by using the command
 ```sh
 $ cd playground-for-web
 ```
@@ -29,17 +29,17 @@ $ cd playground-for-web
 ```sh
 $ npm install
 ```
-5. Start a web server by running using command
+5. Start a web server by running the command
 ```sh
 $ npm start
 ```
-6. Access the url `http://localhost:8000` and start playing!
+6. Access the URL `http://localhost:8000` and start playing!
 
 > Don't forget to update Appwrite endpoint and project ID
 
 ## Contributing
 
-All code contributions - including those of people having commit access - must go through a pull request and approved by a core developer before being merged. This is to ensure proper review of all the code.
+All code contributions - including those of people having commit access - must go through a pull request and be approved by a core developer before being merged. This is to ensure proper review of all the code.
 
 We truly ❤️ pull requests! If you wish to help, you can learn more about how you can contribute to this project in the [contribution guide](https://github.com/appwrite/appwrite/blob/master/CONTRIBUTING.md).
 

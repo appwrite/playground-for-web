@@ -188,6 +188,17 @@
         </button>
     </div>
 
+    <hr class="mb-5" />
+
+    <div class="container">
+        <h2 class="mb-5">Functions</h2>
+
+        <button type="button" class="btn btn-primary btn-lg mr-4 mb-4" onclick="executeFunction()">
+            Execute Function
+        </button>
+
+    </div>
+
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
@@ -211,6 +222,7 @@
         const storage = new Appwrite.Storage(client);
         const teams = new Appwrite.Teams(client);
         const locale = new Appwrite.Locale(client);
+        const functions = new Appwrite.Functions(client);
 
         /**
          * Please Note!
@@ -650,6 +662,19 @@
             );
 
             event.preventDefault();
+        }
+
+        function executeFunction() {
+            let promise = functions.createExecution('test', '', true);
+
+            promise.then(
+                function (response) {
+                    alert("Function executed successfully!");
+                },
+                function (error) {
+                    alert("Failed to execute function.");
+                }
+            );
         }
 
       // let promise = appwrite.database.createDocument('5dac4fc8d9f0c', {

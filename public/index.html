@@ -202,7 +202,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@15.0.0"></script>
 
     <script>
 
@@ -665,7 +665,8 @@
         }
 
         function executeFunction() {
-            let promise = functions.createExecution('test', '', true);
+            // You need to create function and deployment using server SDK or Appwrite Console before executing it. You can use pre-built appwrite function templates from Appwrite Console. (https://cloud.appwrite.io/console/project-[project-ID]/functions). Copy functionId and paste it in createExecution function.
+            let promise = functions.createExecution('functionId', '', true);
 
             promise.then(
                 function (response) {

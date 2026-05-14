@@ -191,7 +191,7 @@
     <!-- Include Appwrite Web SDK before trying to create a new instance -->
 
     <!-- Fetch the latest sdk or use an existing one -->
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1"></script>
+    <script src="sdk.js"></script>
 
     <script>
 
@@ -207,10 +207,7 @@
             .setProject("dev"); // Your Appwrite Project UID, you can get it from your project settings page.
 
         // Prepare all services we are going to use
-        const account = new Appwrite.Account(client);
-        const storage = new Appwrite.Storage(client);
-        const teams = new Appwrite.Teams(client);
-        const locale = new Appwrite.Locale(client);
+        const graphql = new Appwrite.Graphql(client);
 
         /**
          * Please Note!
@@ -236,7 +233,9 @@
         });
 
         function isLogged() {
-            let promise = account.get();
+            let promise = graphql.query({
+                query: `{ accountGet { _id } }`
+            });
 
             promise.then(
                 function (response) {
@@ -249,11 +248,13 @@
         }
 
         function getUserName() {
-            let promise = account.get();
+            let promise = graphql.query({
+                query: `{ accountGet { _id } }`
+            });
 
             promise.then(
                 function (response) {
-                    alert(response.name);
+                    alert(response.data.accountGet.name);
                 },
                 function (error) {
                     alert("No User is Logged!");
@@ -262,11 +263,13 @@
         }
 
         function getUserEmail() {
-            let promise = account.get();
+            let promise = graphql.query({
+                query: `{ accountGet { _id } }`
+            });
 
             promise.then(
                 function (response) {
-                    alert(response.email);
+                    alert(response.data.accountGet.email);
                 },
                 function (error) {
                     alert("No User is Logged!");
@@ -275,14 +278,16 @@
         }
 
         function getSessions() {
-            let promise = account.getSessions();
+            let promise = graphql.query({
+                query: `{ accountGetSessions { total sessions { _id userId expires } }`
+            });
 
             promise.then(
                 function (response) {
-                    console.log("User Devices:", response);
+                    console.log("User Sessions:", response.data.accountGetSessions.sessions);
                     alert(
                         "User has " +
-                        response.total +
+                        response.data.accountGetSessions.total +
                         " active sessions. Check developer console for more info"
                     );
                 },
@@ -293,11 +298,13 @@
         }
 
         function getLogs() {
-            let promise = account.getLogs();
+            let promise = graphql.query({
+                query: `{ accountGetLogs { total logs { event } } }`
+            });
 
             promise.then(
                 function (response) {
-                    console.log("User Logs:", response);
+                    console.log("User Logs:", response.data.accountGetLogs.logs);
                     alert(
                         "User has " +
                         response.logs.length +
@@ -312,65 +319,85 @@
 
         function register(event) {
             event.preventDefault();
-            account
-                .create(
-                    "unique()",
-                    event.target.elements["register-email"].value, // Email
-                    event.target.elements["register-password"].value, // Password
-                    "User Name"
-                )
-                .then(
-                    function (response) {
-                        alert("Account created succefully!");
-                    },
-                    function (error) {
-                        alert("Failed to create account");
+
+            graphql.mutate({
+                query: `mutation CreateAccount ($email: String!, $password: String!, $name: String) {
+                    accountCreate(userId: "unique()", email: $email, password: $password, name: "User Name") {
+                        _id
                     }
-                );
+                }`,
+                variables: {
+                    email: event.target.elements["register-email"].value,
+                    password: event.target.elements["register-password"].value,
+                }
+            }).then(
+                function (response) {
+                    alert("Account created successfully!");
+                },
+                function (error) {
+                    alert("Failed to create account");
+                }
+            );
         }
 
         function loginAnonymously() {
-            account.createAnonymousSession().then(
+            graphql.mutate({
+                query: `mutation {
+                    accountCreateAnonymousSession {
+                        _id
+                    }
+                }`
+            }).then(
                 function (response) {
-                    alert("anonymous session created successfully!");
+                    alert("User logged in anonymously!");
                 },
                 function (error) {
-                    alert("failed to create session");
+                    alert("Failed to login anonymously");
                 }
             );
         }
 
         function createJWT() {
-            account.createJWT().then(
+            graphql.mutate({
+                query: `mutation {
+                    accountCreateJWT {
+                        _id
+                    }
+                }`
+            }).then(
                 function (response) {
-                    console.log("JWT: ", response);
-                    alert("JWT created.");
+                    alert("JWT created!");
                 },
                 function (error) {
-                    alert("failed to create session");
+                    alert("Failed to create JWT");
                 }
             );
         }
 
         function login(event) {
             event.preventDefault();
-            account
-                .createEmailSession(
-                    event.target.elements["login-email"].value, // Email
-                    event.target.elements["login-password"].value // Password
-                )
-                .then(
-                    function (response) {
-                        alert("Session created succefully!");
-                        client.subscribe("account", function(response) {
-                            console.log('Received Account event', response);
-                        });
 
-                    },
-                    function (error) {
-                        alert("Failed to create session");
+            graphql.mutate({
+                query: `mutation CreateEmailSession ($email: String!, $password: String!) {
+                    accountCreateEmailSession(email: $email, password: $password) {
+                        _id
                     }
-                );
+                }`,
+                variables: {
+                    email: event.target.elements["login-email"].value,
+                    password: event.target.elements["login-password"].value,
+                }
+            }).then(
+                function (response) {
+                    alert("User logged in!");
+                    client.subscribe("account", function(response) {
+                        console.log('Received Account event', response);
+                    });
+                },
+                function (error) {
+                    alert("Failed to login");
+                }
+            );
         }
 
         function loginWithGoogle(event) {
@@ -380,18 +407,25 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = account.createOAuth2Session(
-                "google",
-                "http://localhost:8000/?success", // Callback URL for success
-                "http://localhost:8000/?failure" // Callback URL for failure
-            );
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation GoogleLogin (provider: String!, successUrl: String, failureUrl: String) {
+                    accountCreateOAuth2Session(
+                        provider: $provider,
+                        successUrl: $successUrl,
+                        failureUrl: $failureUrl,
+                    )
+                }`,
+                variables: {
+                    provider: "google",
+                    successUrl: "http://localhost:8000/?success",
+                    failureUrl: "http://localhost:8000/?failure",
+                }
+            }).then(
                 function (response) {
-                    console.log(response); // Success
+                    alert("User logged in with Google!");
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert("Failed to login with Google");
                 }
             );
         }
@@ -403,19 +437,25 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = account.createOAuth2Session(
-                "facebook",
-                "http://localhost:8000/?success", // Callback URL for success
-                "http://localhost:8000/?failure", // Callback URL for failure
-                ["user_location"]
-            );
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation FacebookLogin (provider: String!, successUrl: String, failureUrl: String) {
+                    accountCreateOAuth2Session(
+                        provider: $provider,
+                        successUrl: $successUrl,
+                        failureUrl: $failureUrl,
+                    )
+                }`,
+                variables: {
+                    provider: "facebook",
+                    successUrl: "http://localhost:8000/?success",
+                    failureUrl: "http://localhost:8000/?failure",
+                }
+            }).then(
                 function (response) {
-                    console.log(response); // Success
+                    alert("User logged in with Google!");
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert("Failed to login with Google");
                 }
             );
         }
@@ -427,19 +467,25 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = account.createOAuth2Session(
-                "github",
-                "http://localhost:8000/?success", // Callback URL for success
-                "http://localhost:8000/?failure", // Callback URL for failure
-                []
-            );
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation GitHubLogin (provider: String!, successUrl: String, failureUrl: String) {
+                    accountCreateOAuth2Session(
+                        provider: $provider,
+                        successUrl: $successUrl,
+                        failureUrl: $failureUrl,
+                    )
+                }`,
+                variables: {
+                    provider: "github",
+                    successUrl: "http://localhost:8000/?success",
+                    failureUrl: "http://localhost:8000/?failure",
+                }
+            }).then(
                 function (response) {
-                    console.log(response); // Success
+                    alert("User logged in with Github!");
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert("Failed to login with Github");
                 }
             );
         }
@@ -451,57 +497,76 @@
              *  session cookie due to some browsers 3rd party cookie policy limitations,
              *  this is not required for other client based platforms
              */
-            let promise = account.createOAuth2Session(
-                "apple",
-                "http://localhost:8000/?success", // Callback URL for success
-                "http://localhost:8000/?failure" // Callback URL for failure
-            );
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation AppleLogin (provider: String!, successUrl: String, failureUrl: String) {
+                    accountCreateOAuth2Session(
+                        provider: $provider,
+                        successUrl: $successUrl,
+                        failureUrl: $failureUrl,
+                    )
+                }`,
+                variables: {
+                    provider: "apple",
+                    successUrl: "http://localhost:8000/?success",
+                    failureUrl: "http://localhost:8000/?failure",
+                }
+            }).then(
                 function (response) {
-                    console.log(response); // Success
+                    alert("User logged in with Google!");
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert("Failed to login with Google");
                 }
             );
         }
 
         function deleteSessions() {
-            let promise = account.deleteSessions();
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation {
+                    accountDeleteSessions
+                }`
+            }).then(
                 function (response) {
-                    console.log("All session deleted."); // Success
+                    alert("Sessions deleted!");
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert("Failed to delete sessions");
                 }
             );
         }
 
         function deleteCurrentSession() {
-            let promise = account.deleteSession('current');
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation {
+                    accountDeleteSession(sessionId: "current")
+                }`
+            }).then(
                 function (response) {
-                    console.log("Current session deleted."); // Success
+                    alert("Current session deleted!");
                 },
                 function (error) {
-                    console.log(error); // Failure
+                    alert("Failed to delete current session");
                 }
             );
         }
 
         function createTeam() {
-            let promise = teams.create('test', 'Test Team');
-
-            promise.then(
+            graphql.mutate({
+                query: `mutation CreateTeam ($teamId: $teamId, $name: String!) {
+                    teamCreate(teamId: $teamId, name: $name) {
+                        _id
+                    }
+                }`,
+                variables: {
+                    teamId: "team-1",
+                    name: "My Team",
+                }
+            }).then(
                 function (response) {
-                    alert("Team created."); // Success
+                    alert("Team created!");
                 },
                 function (error) {
-                    alert(error); // Failure
+                    alert("Failed to create team");
                 }
             );
         }
@@ -509,14 +574,25 @@
         function createTeamMembership() {
             let random = Math.floor(1000 + Math.random() * 9000);
             let email = "test+" + random + "@test.com";
-            let promise = teams.createMembership('test', email, ['admin'], 'http://localhost');
 
-            promise.then(
+            graphql.mutate({
+                query: `mutation CreateTeamMembership ($teamId: String!, $email: String!, $roles: [String!]!, $url: String!) {
+                    teamCreateMembership(teamId: $teamId, email: $email, roles: $roles, url: $url) {
+                        _id
+                    }
+                }`,
+                variables: {
+                    teamId: "team-1",
+                    email: email,
+                    roles: ["admin"],
+                    url: "http://localhost",
+                }
+            }).then(
                 function (response) {
-                    alert("Membership created."); // Success
+                    alert("Team membership created!");
                 },
                 function (error) {
-                    alert(error); // Failure
+                    alert("Failed to create team membership");
                 }
             );
         }
@@ -533,6 +609,30 @@
         }
 
         function listFiles() {
+            graphql.query({
+                query: `query ListFiles ($bucketId: String!) {
+                    storageListFiles(bucketId: $bucketId) {
+                        _id
+                        name
+                        bucket
+                        size
+                        createdAt
+                        updatedAt
+                    }
+                }`,
+                variables: {
+                    bucketId: "testbucket",
+                }
+            }).then(
+                function (response) {
+                    console.log(response); // Success
+                    alert("Files listed successfully");
+                },
+                function (error) {
+                    console.log(error); // Failure
+                }
+            );
+
             let promise = storage.listFiles('testbucket');
 
             promise.then(function (response) {

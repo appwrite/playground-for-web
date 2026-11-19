@@ -252,9 +252,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("User is logged:", response);
                     alert("User is Logged!");
                 },
                 function (error) {
+                    console.log(error);
                     alert("No User is Logged!");
                 }
             );
@@ -267,9 +269,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("User Name:", response);
                     alert(response.name);
                 },
                 function (error) {
+                    console.log(error);
                     alert("No User is Logged!");
                 }
             );
@@ -282,9 +286,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("User Email:", response);
                     alert(response.email);
                 },
                 function (error) {
+                    console.log(error);
                     alert("No User is Logged!");
                 }
             );
@@ -305,6 +311,7 @@
                     );
                 },
                 function (error) {
+                    console.log(error);
                     alert("No User is Logged!");
                 }
             );
@@ -325,6 +332,7 @@
                     );
                 },
                 function (error) {
+                    console.log(error);
                     alert("No User is Logged!");
                 }
             );
@@ -342,9 +350,11 @@
                 )
                 .then(
                     function (response) {
+                        console.log("Account created:", response);
                         alert("Account created succefully!");
                     },
                     function (error) {
+                        console.log(error);
                         alert("Failed to create account");
                     }
                 );
@@ -355,9 +365,11 @@
         function loginAnonymously() {
             account.createAnonymousSession().then(
                 function (response) {
+                    console.log("Anonymous session created:", response);
                     alert("anonymous session created successfully!");
                 },
                 function (error) {
+                    console.log(error);
                     alert("failed to create session");
                 }
             );
@@ -372,6 +384,7 @@
                     alert("JWT created.");
                 },
                 function (error) {
+                    console.log(error);
                     alert("failed to create session");
                 }
             );
@@ -387,6 +400,7 @@
                 )
                 .then(
                     function (response) {
+                        console.log("Session created:", response);
                         alert("Session created succefully!");
                         client.subscribe("account", function(response) {
                             console.log('Received Account event', response);
@@ -394,6 +408,7 @@
 
                     },
                     function (error) {
+                        console.log(error);
                         alert("Failed to create session");
                     }
                 );
@@ -416,9 +431,11 @@
             promise.then(
                 function (response) {
                     console.log(response); // Success
+                    alert("Google login successful!");
                 },
                 function (error) {
                     console.log(error); // Failure
+                    alert("Google login failed!");
                 }
             );
 
@@ -441,9 +458,11 @@
             promise.then(
                 function (response) {
                     console.log(response); // Success
+                    alert("Facebook login successful!");
                 },
                 function (error) {
                     console.log(error); // Failure
+                    alert("Facebook login failed!");
                 }
             );
 
@@ -466,9 +485,11 @@
             promise.then(
                 function (response) {
                     console.log(response); // Success
+                    alert("Github login successful!");
                 },
                 function (error) {
                     console.log(error); // Failure
+                    alert("Github login failed!");
                 }
             );
 
@@ -490,9 +511,11 @@
             promise.then(
                 function (response) {
                     console.log(response); // Success
+                    alert("Apple login successful!");
                 },
                 function (error) {
                     console.log(error); // Failure
+                    alert("Apple login failed!");
                 }
             );
 
@@ -503,12 +526,14 @@
             let promise = account.deleteSessions();
 
             promise.then(
-                function (response) {
-                    console.log("All session deleted."); // Success
-                },
-                function (error) {
-                    console.log(error); // Failure
-                }
+            function (response) {
+                console.log("Sessions deleted:", response);
+                alert("All sessions deleted."); // Success
+            },
+            function (error) {
+                console.log(error); // Failure
+                alert("Failed to delete sessions");
+            }
             );
 
             event.preventDefault();
@@ -519,10 +544,12 @@
 
             promise.then(
                 function (response) {
-                    console.log("Current session deleted."); // Success
+                    console.log("Current session deleted:", response);
+                    alert("Current session deleted."); // Success
                 },
                 function (error) {
                     console.log(error); // Failure
+                    alert("Failed to delete current session");
                 }
             );
 
@@ -534,9 +561,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("Team created:", response);
                     alert("Team created."); // Success
                 },
                 function (error) {
+                    console.log(error);
                     alert(error); // Failure
                 }
             );
@@ -551,9 +580,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("Membership created:", response);
                     alert("Membership created."); // Success
                 },
                 function (error) {
+                    console.log(error);
                     alert(error); // Failure
                 }
             );
@@ -569,6 +600,7 @@
                 alert("File uploaded successfully");
             }, function (error) {
                 console.log(error); // Failure
+                alert("Failed to upload file");
             });
 
             event.preventDefault();
@@ -590,8 +622,10 @@
                     ul.appendChild(li);
                 }
                 console.log(response); // Success
+                alert("Files listed successfully");
             }, function (error) {
                 console.log(error); // Failure
+                alert("Failed to list files");
             });
 
             event.preventDefault();
@@ -605,6 +639,7 @@
                 console.log(response); // Success
             }, function (error) {
                 console.log(error); // Failure
+                alert("Failed to get file");
             });
 
             event.preventDefault();
@@ -615,6 +650,7 @@
 
             promise.then(
                 function (response) {
+                    console.log("User location:", response);
                     alert(
                         "User is from " +
                         response.country +
@@ -623,6 +659,7 @@
                     );
                 },
                 function (error) {
+                    console.log(error);
                     alert("No User is Logged!");
                 }
             );
@@ -635,9 +672,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("User IP:", response);
                     alert("User IP is: " + response.ip);
                 },
                 function (error) {
+                    console.log(error);
                     alert("Failed to get user locale.");
                 }
             );
@@ -650,6 +689,7 @@
 
             promise.then(
                 function (response) {
+                    console.log("EU status:", response);
                     alert(
                         response.eu
                             ? "User is a member of the EU"
@@ -657,6 +697,7 @@
                     );
                 },
                 function (error) {
+                    console.log(error);
                     alert("Failed to get user locale.");
                 }
             );
@@ -670,9 +711,11 @@
 
             promise.then(
                 function (response) {
+                    console.log("Function executed:", response);
                     alert("Function executed successfully!");
                 },
                 function (error) {
+                    console.log(error);
                     alert("Failed to execute function.");
                 }
             );
